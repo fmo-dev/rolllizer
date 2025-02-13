@@ -13,17 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
 
   --color-main: #056842;
-  --color-white: #fffbbd;
+  --color-white: #f9f6c9;
+  --color-background: #fffbbd;
   --color-danger: #ca3c25;
   --color-success: #7fb069;
   --color-warning: #e6aa68;
+  --color-text: #29302d;
 }
-
-$main: #056842;
-$white: #fffbbd;
-$danger: #ca3c25;
-$success: #7fb069;
-$warning: #e6aa68;
 
 a {
   font-weight: 500;
