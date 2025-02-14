@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { MainLayout } from "../../shared/layouts/MainLayout";
+import { MainLayout } from "../../layout/MainLayout";
 import { ROUTES } from "./constants";
 
 export const Router = () => {

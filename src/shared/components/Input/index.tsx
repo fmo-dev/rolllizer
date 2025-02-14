@@ -1,6 +1,7 @@
-import { FC, InputHTMLAttributes } from "react";
+import { FC } from "react";
 import './styles.scss'
+import { TextField, TextFieldProps } from "@mui/material";
 
-export const AppInput: FC<InputHTMLAttributes<HTMLInputElement>> = (props) => (
-  <input className={`app-input ${props.className}`} {...props} />
+export const AppInput: FC<TextFieldProps> = (props) => (
+  <TextField {...props} variant="outlined" inputMode="numeric" />
 );

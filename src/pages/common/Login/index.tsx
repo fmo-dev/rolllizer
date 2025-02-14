@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
-import { useAuthentication } from '../../../providers/authentication/hooks';
 import { LoginStep } from './types';
 import { PhoneInput } from '../../../shared/components/Input/PhoneInput';
-import { AppInput } from '../../../shared/components/Input';
 
+import './styles.scss'
 const Login = () => {
-  const { auth } = useAuthentication();
-  const [currentStep, setCurrentStep] = useState(LoginStep.PHONE);
+  const [currentStep] = useState(LoginStep.PHONE);
 
   const renderStep = () => {
     switch (currentStep) {
       case LoginStep.PHONE:
-        return <AppInput type="tel" />
+        return <PhoneInput label="Numéro de téléphone" />
       case LoginStep.OTP:
         return null;
     }
   }
 
-  return renderStep();
+  return (
+    <div id='login-page'>
+      {renderStep()}
+    </div>
+  );
 }
 
 export default Login
