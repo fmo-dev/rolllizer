@@ -9,7 +9,7 @@ const Login = () => {
   const renderStep = () => {
     switch (currentStep) {
       case LoginStep.PHONE:
-        return <PhoneInput label="Numéro de téléphone" />
+        return <PhoneInput className="login-input" label="Numéro de téléphone" />
       case LoginStep.OTP:
         return null;
     }
@@ -17,7 +17,10 @@ const Login = () => {
 
   return (
     <div id='login-page'>
-      {renderStep()}
+      <h1>Connexion</h1>
+      <div className='login-input-container'>
+        {renderStep()}
+      </div>
     </div>
   );
 }
