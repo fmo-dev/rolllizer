@@ -6,17 +6,21 @@ import { APIProvider } from './providers/api/provider';
 import './App.scss'
 import { Router } from './providers/router';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material';
+import { theme } from './theme';
 
 function App() {
 
   return (
-    <BrowserRouter>
-      <APIProvider>
-        <AuthenticationProvider>
-          <Router />
-        </AuthenticationProvider>
-      </APIProvider>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <APIProvider>
+          <AuthenticationProvider>
+            <Router />
+          </AuthenticationProvider>
+        </APIProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

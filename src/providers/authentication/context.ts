@@ -2,8 +2,8 @@ import { createContext } from "react";
 
 interface AuthenticationContextState {
   isAuth: boolean;
-  auth(input: string): Promise<void>;
-  phoneNumber: string;
+  auth(phone: string): Promise<void>;
+  sendOTP(phone: string, otp: string): Promise<void>;
 }
 
 export const AuthenticationContext = createContext({} as AuthenticationContextState);

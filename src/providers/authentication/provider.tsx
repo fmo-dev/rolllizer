@@ -7,7 +7,6 @@ import { ROUTES } from "../router/constants";
 
 
 export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [isAuth, setIsAuth] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -19,14 +18,26 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
     }
   }, [pathname, isAuth, navigate])
 
-  const auth = useCallback(async () => {
+  const auth = useCallback(async (phone: string) => {
     await api.auth.signInWithOtp({
-      phone: '+33633083852'
+      phone: phone
     });
   }, [api]);
 
+  const sendOTP = useCallback(async (phone: string, otp: string) => {
+    const result = await api.auth.verifyOtp({
+      phone,
+      token: otp,
+      type: 'sms'
+    });
+    if ('access_token' in result.data) {
+      localStorage.setItem(AUTH_STORAGE_KEY, result.data.access_token as string);
+      setIsAuth(true);
+    }
+  }, [api]);
+
   return (
-    <AuthenticationContext.Provider value={{ isAuth, auth, phoneNumber }}>
+    <AuthenticationContext.Provider value={{ isAuth, auth, sendOTP }}>
       {children}
     </AuthenticationContext.Provider>
   );

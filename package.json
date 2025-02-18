@@ -12,7 +12,8 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/material": "^6.4.1",
+    "@mui/icons-material": "^6.4.4",
+    "@mui/material": "^6.4.4",
     "@supabase/supabase-js": "^2.48.1",
     "mui-one-time-password-input": "^3.0.2",
     "mui-tel-input": "^7.0.0",
