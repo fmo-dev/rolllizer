@@ -4,5 +4,9 @@ export const ROUTES = {
   login: {
     path: '/login',
     Component: Login
+  },
+  home: {
+    path: '/',
+    Component: Login
   }
 }
