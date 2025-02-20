@@ -49,7 +49,7 @@ const Login = () => {
     <div id='login-page'>
       <h1>Connexion</h1>
       <div className='form-container'>
-        <div className='form'>
+        <form className='form'>
           <div>
             {currentStep === LoginStep.OTP && (
               <Button className='back-button' onClick={() => setCurrentStep(LoginStep.PHONE)}>
@@ -59,6 +59,7 @@ const Login = () => {
           </div>
           {renderStep()}
           <Button
+            type='submit'
             variant='contained'
             color='primary'
             disabled={currentStep === LoginStep.OTP}
@@ -70,9 +71,9 @@ const Login = () => {
           >
             Valider
           </Button>
-        </div>
+        </form>
       </div>
-    </div>
+    </div >
   );
 }
 
