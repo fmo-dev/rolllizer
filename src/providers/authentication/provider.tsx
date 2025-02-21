@@ -12,10 +12,12 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   const api = useAPI();
   const [user, setUser] = useState<User | null>(null);
 
-  const onLogin = useCallback(async (phone: string) => {
-    const authenticatedUser = await api.from('user').select('*').eq('phone', phone).single<User>();
-    console.log(authenticatedUser);
+  const onLogin = useCallback(async () => {
+    const authenticatedUser = await api.from('user').select('*').single<User>();
     setUser(authenticatedUser.data);
+    if (!authenticatedUser.data?.profile) {
+      navigate(ROUTES.selectProfile.path);
+    }
     if (pathname === ROUTES.login.path) {
       navigate(ROUTES.home.path);
     }
@@ -26,16 +28,13 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
     if (!data.session) {
       return navigate(ROUTES.login.path);
     }
-    const phone = data.session.user.phone;
-    if (!phone) {
+    if (!data.session.user.phone) {
       api.auth.signOut()
       return navigate(ROUTES.login.path);
     }
     await api.auth.refreshSession();
-    onLogin(phone);
+    onLogin();
   }, [api, onLogin, navigate])
-
-  useEffect(() => { checkSession() }, [checkSession])
 
   const auth = useCallback(async (phone: string) => {
     await api.auth.signInWithOtp({
@@ -50,10 +49,12 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
       type: 'sms'
     });
     if (data.user) {
-      await api.from('user').insert({ phone });
-      onLogin(phone);
+      await api.from('user').insert({ user_id: data.user.id });
+      onLogin();
     }
   }, [api, onLogin]);
+
+  useEffect(() => { checkSession() }, [checkSession])
 
   return (
     <AuthenticationContext.Provider value={{ auth, sendOTP, user }}>

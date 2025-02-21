@@ -8,6 +8,7 @@ import { useAuthentication } from '../../../providers/authentication/hooks';
 import { PhoneInput } from '../../../shared/components/Input/PhoneInput';
 import { OTPInput } from '../../../shared/components/Input/OTPInput';
 import './styles.scss'
+import { Title } from '../../../shared/components/Title';
 
 const Login = () => {
   const [currentStep, setCurrentStep] = useState(LoginStep.PHONE);
@@ -47,7 +48,7 @@ const Login = () => {
 
   return (
     <div id='login-page'>
-      <h1>Connexion</h1>
+      <Title>Connexion</Title>
       <div className='form-container'>
         <form className='form'>
           <div>
