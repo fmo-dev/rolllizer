@@ -1,14 +1,14 @@
 import Login from "../../pages/common/Login";
-import { SelectProfile } from "../../pages/common/SelectProfile";
+import { SelectRole } from "../../pages/common/SelectRole";
 
 export const ROUTES = {
   login: {
     path: '/login',
     Component: Login
   },
-  selectProfile: {
+  SelectRole: {
     path: '/select-profile',
-    Component: SelectProfile
+    Component: SelectRole
   },
   home: {
     path: '/',

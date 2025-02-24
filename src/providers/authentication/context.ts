@@ -8,3 +8,4 @@ interface AuthenticationContextState {
 }
 
 export const AuthenticationContext = createContext({} as AuthenticationContextState);
+

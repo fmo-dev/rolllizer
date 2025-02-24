@@ -4,6 +4,7 @@ import { useAPI } from "../api/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "../router/constants";
 import { User } from "./types";
+import { AuthenticatedUserProvider } from "./authenticated-user/provider";
 
 
 export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
@@ -16,7 +17,7 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
     const authenticatedUser = await api.from('user').select('*').single<User>();
     setUser(authenticatedUser.data);
     if (!authenticatedUser.data?.profile) {
-      navigate(ROUTES.selectProfile.path);
+      navigate(ROUTES.SelectRole.path);
     }
     if (pathname === ROUTES.login.path) {
       navigate(ROUTES.home.path);
@@ -58,7 +59,12 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <AuthenticationContext.Provider value={{ auth, sendOTP, user }}>
-      {children}
+      {user && (
+        <AuthenticatedUserProvider user={user}>
+          {children}
+        </AuthenticatedUserProvider>
+      )}
+      {!user && children}
     </AuthenticationContext.Provider>
   );
 }

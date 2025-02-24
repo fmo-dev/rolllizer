@@ -22,6 +22,10 @@
   --color-text: #29302d;
 }
 
+* {
+  color: var(--color-text);
+}
+
 body {
   margin: 0;
 }

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 
-import { Button } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { LoginStep } from './types';
@@ -9,6 +8,8 @@ import { PhoneInput } from '../../../shared/components/Input/PhoneInput';
 import { OTPInput } from '../../../shared/components/Input/OTPInput';
 import './styles.scss'
 import { Title } from '../../../shared/components/Title';
+import { Page } from '../../../shared/components/Page';
+import { AppButton } from '../../../shared/components/Button';
 
 const Login = () => {
   const [currentStep, setCurrentStep] = useState(LoginStep.PHONE);
@@ -47,22 +48,23 @@ const Login = () => {
   }
 
   return (
-    <div id='login-page'>
+    <Page id='login-page'>
       <Title>Connexion</Title>
       <div className='form-container'>
         <form className='form'>
           <div>
             {currentStep === LoginStep.OTP && (
-              <Button className='back-button' onClick={() => setCurrentStep(LoginStep.PHONE)}>
+              <AppButton className='back-button' onClick={() => setCurrentStep(LoginStep.PHONE)}>
                 <ArrowBackIcon /> Retour
-              </Button>
+              </AppButton>
             )}
           </div>
           {renderStep()}
-          <Button
+          <AppButton
             type='submit'
             variant='contained'
             color='primary'
+            center
             disabled={currentStep === LoginStep.OTP}
             loading={isLoading}
             onClick={() => asyncOperation(async () => {
@@ -71,10 +73,10 @@ const Login = () => {
             })}
           >
             Valider
-          </Button>
+          </AppButton>
         </form>
       </div>
-    </div >
+    </Page>
   );
 }
 
