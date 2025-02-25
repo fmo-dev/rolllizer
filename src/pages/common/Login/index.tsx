@@ -32,7 +32,6 @@ const Login = () => {
               label="Numéro de téléphone"
               onChange={(value) => currentPhoneNumberRef.current = value}
             />
-
           </>
         )
       case LoginStep.OTP:
@@ -68,8 +67,12 @@ const Login = () => {
             disabled={currentStep === LoginStep.OTP}
             loading={isLoading}
             onClick={() => asyncOperation(async () => {
-              await auth(currentPhoneNumberRef.current);
-              setCurrentStep(LoginStep.OTP);
+              try {
+                await auth(currentPhoneNumberRef.current);
+                setCurrentStep(LoginStep.OTP);
+              } catch (e) {
+                console.error(e);
+              }
             })}
           >
             Valider

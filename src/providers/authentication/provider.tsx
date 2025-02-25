@@ -4,7 +4,7 @@ import { useAPI } from "../api/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "../router/constants";
 import { User } from "./types";
-import { AuthenticatedUserProvider } from "./authenticated-user/provider";
+import { UserProvider } from "../user/provider";
 
 
 export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
@@ -38,9 +38,13 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   }, [api, onLogin, navigate])
 
   const auth = useCallback(async (phone: string) => {
-    await api.auth.signInWithOtp({
+    const res = await api.auth.signInWithOtp({
       phone: phone
     });
+    if (res.error) {
+      throw new Error('Invalid phone number');
+    }
+    return;
   }, [api]);
 
   const sendOTP = useCallback(async (phone: string, otp: string) => {
@@ -52,7 +56,7 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
     if (data.user) {
       await api.from('user').insert({ user_id: data.user.id });
       onLogin();
-    }
+    } else throw new Error('Invalid OTP');
   }, [api, onLogin]);
 
   useEffect(() => { checkSession() }, [checkSession])
@@ -60,9 +64,9 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   return (
     <AuthenticationContext.Provider value={{ auth, sendOTP, user }}>
       {user && (
-        <AuthenticatedUserProvider user={user}>
+        <UserProvider user={user}>
           {children}
-        </AuthenticatedUserProvider>
+        </UserProvider>
       )}
       {!user && children}
     </AuthenticationContext.Provider>

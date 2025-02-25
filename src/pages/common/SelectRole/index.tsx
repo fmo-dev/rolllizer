@@ -1,30 +1,30 @@
 
+import { useState } from 'react';
+
 import { Title } from '../../../shared/components/Title';
-import './styles.scss';
-import { Page } from '../../../shared/components/Page';
+import { useUser } from '../../../providers/user/hooks';
+import { UserProfile } from '../../../providers/user/types';
 import { AppButton } from '../../../shared/components/Button';
+import { InfoText } from '../../../shared/components/InfoText';
+import { Page } from '../../../shared/components/Page';
 
 import './styles.scss';
-import { useAPI } from '../../../providers/api/hooks';
-import { useState } from 'react';
-import { useAuthenticatedUser } from '../../../providers/authentication/authenticated-user/hooks';
 
 export const SelectRole: React.FC = () => {
-  const api = useAPI();
-  const { user } = useAuthenticatedUser();
-  const [isLoading, setIsLoading] = useState<string>();
+  const { updateUser } = useUser();
+  const [isLoading, setIsLoading] = useState<UserProfile>();
 
-  const onRoleSelect = async (profile: string) => {
+  const onRoleSelect = async (profile: UserProfile) => {
     setIsLoading(profile);
     try {
-      await api.from('user').update({ profile }).eq('id', user.id);
+      await updateUser({ profile });
     }
     finally {
       setIsLoading(undefined);
     }
   }
 
-  const renderRoleButton = (role: string, name: string) => (
+  const renderRoleButton = (role: UserProfile, name: string) => (
     <AppButton
       center
       variant='contained'
@@ -40,11 +40,11 @@ export const SelectRole: React.FC = () => {
 
   return (
     <Page id="select-role-page">
-      <Title>Sélectionne ton rôle</Title>
+      <Title>Première connexion</Title>
       <div className='content'>
-        <p className='description'>
+        <InfoText title="Sélectionne ton rôle" variant='info'>
           Tu pourras alterner entre les deux à tout moment.
-        </p>
+        </InfoText>
         <div className='buttons'>
           {renderRoleButton('master', 'Maitre du jeu')}
           {renderRoleButton('player', 'Joueur')}
