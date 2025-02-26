@@ -1,37 +1,42 @@
 import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { AuthenticationContext } from "./context";
 import { useAPI } from "../api/hooks";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ROUTES } from "../router/constants";
 import { User } from "./types";
 import { UserProvider } from "../user/provider";
+import { useRouter } from "../router/hooks";
 
 
 export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
+  const { navigate } = useRouter();
   const api = useAPI();
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const onLogin = useCallback(async () => {
     const authenticatedUser = await api.from('user').select('*').single<User>();
     setUser(authenticatedUser.data);
     if (!authenticatedUser.data?.profile) {
-      navigate(ROUTES.SelectRole.path);
+      navigate('selectRole');
     }
     if (pathname === ROUTES.login.path) {
-      navigate(ROUTES.home.path);
+      navigate('home');
     }
+    setIsLoading(false);
   }, [api, navigate, pathname]);
 
   const checkSession = useCallback(async () => {
     const { data } = await api.auth.getSession();
     if (!data.session) {
-      return navigate(ROUTES.login.path);
+      setIsLoading(false);
+      return navigate('login');
     }
     if (!data.session.user.phone) {
       api.auth.signOut()
-      return navigate(ROUTES.login.path);
+      setIsLoading(false);
+      return navigate('login');
     }
     await api.auth.refreshSession();
     onLogin();
@@ -61,6 +66,9 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => { checkSession() }, [checkSession])
 
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
   return (
     <AuthenticationContext.Provider value={{ auth, sendOTP, user }}>
       {user && (

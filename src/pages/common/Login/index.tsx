@@ -7,7 +7,6 @@ import { useAuthentication } from '../../../providers/authentication/hooks';
 import { PhoneInput } from '../../../shared/components/Input/PhoneInput';
 import { OTPInput } from '../../../shared/components/Input/OTPInput';
 import './styles.scss'
-import { Title } from '../../../shared/components/Title';
 import { Page } from '../../../shared/components/Page';
 import { AppButton } from '../../../shared/components/Button';
 
@@ -47,8 +46,7 @@ const Login = () => {
   }
 
   return (
-    <Page id='login-page'>
-      <Title>Connexion</Title>
+    <Page id='login-page' title='Connexion'>
       <div className='form-container'>
         <form className='form'>
           <div>

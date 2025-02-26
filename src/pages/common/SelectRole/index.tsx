@@ -1,7 +1,6 @@
 
 import { useState } from 'react';
 
-import { Title } from '../../../shared/components/Title';
 import { useUser } from '../../../providers/user/hooks';
 import { UserProfile } from '../../../providers/user/types';
 import { AppButton } from '../../../shared/components/Button';
@@ -39,10 +38,9 @@ export const SelectRole: React.FC = () => {
   )
 
   return (
-    <Page id="select-role-page">
-      <Title>Première connexion</Title>
+    <Page id='select-role-page' title='Première connexion'>
       <div className='content'>
-        <InfoText title="Sélectionne ton rôle" variant='info'>
+        <InfoText title='Sélectionne ton rôle' variant='info'>
           Tu pourras alterner entre les deux à tout moment.
         </InfoText>
         <div className='buttons'>
