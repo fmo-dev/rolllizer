@@ -13,7 +13,7 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   const { navigate } = useRouter();
   const api = useAPI();
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   const onLogin = useCallback(async () => {
     const authenticatedUser = await api.from('user').select('*').single<User>();
@@ -24,18 +24,18 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
     if (pathname === ROUTES.login.path) {
       navigate('home');
     }
-    setIsLoading(false);
+    setIsAuthLoading(false);
   }, [api, navigate, pathname]);
 
   const checkSession = useCallback(async () => {
     const { data } = await api.auth.getSession();
     if (!data.session) {
-      setIsLoading(false);
+      setIsAuthLoading(false);
       return navigate('login');
     }
     if (!data.session.user.phone) {
       api.auth.signOut()
-      setIsLoading(false);
+      setIsAuthLoading(false);
       return navigate('login');
     }
     await api.auth.refreshSession();
@@ -66,11 +66,8 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => { checkSession() }, [checkSession])
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
   return (
-    <AuthenticationContext.Provider value={{ auth, sendOTP, user }}>
+    <AuthenticationContext.Provider value={{ auth, sendOTP, user, isAuthLoading }}>
       {user && (
         <UserProvider user={user}>
           {children}

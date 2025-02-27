@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './theme';
 import { RouterContextProvider } from './providers/router/provider';
+import { GroupContextProvider } from './providers/groups/provider';
 
 function App() {
 
@@ -15,7 +16,9 @@ function App() {
       <BrowserRouter>
         <APIProvider>
           <AuthenticationProvider>
-            <RouterContextProvider />
+            <GroupContextProvider>
+              <RouterContextProvider />
+            </GroupContextProvider>
           </AuthenticationProvider>
         </APIProvider>
       </BrowserRouter>
