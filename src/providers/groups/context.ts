@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import { Group } from "./types";
+import { UserGroups } from "./types";
 
 interface GroupContextState {
-  groups: Group[];
+  groups: UserGroups;
 }
 
 export const GroupContext = createContext({} as GroupContextState);

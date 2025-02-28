@@ -1,4 +1,12 @@
-#create-group-button {
+// #create-group-button {
+//   margin: auto;
+//   transform: translateY(-50%);
+// }
+.no-group {
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
   transform: translateY(-50%);
 }

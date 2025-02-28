@@ -3,7 +3,7 @@ import { cn } from "../../utils";
 
 import './styles.scss';
 
-interface AppButtonProps extends ButtonProps {
+export interface AppButtonProps extends ButtonProps {
   center?: boolean;
 }
 
