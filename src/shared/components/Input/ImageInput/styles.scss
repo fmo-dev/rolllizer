@@ -1,0 +1,25 @@
+.image-input-container {
+  display: flex;
+  margin-top: 16px;
+  .image-input-button {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(240, 235, 235, 0.099);
+    border: 1px dashed #ccc;
+    border-radius: 5px;
+    position: relative;
+    & .image-input-button-text {
+      font-size: 14px;
+      padding: 12px 16px;
+    }
+    & .remove-image-button {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+    }
+  }
+  .image-input {
+    display: none;
+  }
+}

@@ -1,0 +1,15 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  & .image-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & label {
+      color: var(--color-text);
+    }
+  }
+}

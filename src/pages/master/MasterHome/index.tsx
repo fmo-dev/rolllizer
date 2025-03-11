@@ -15,7 +15,7 @@ export const MasterHome: React.FC = () => {
   const noGroupRender = (
     <div className="no-group">
       <InfoText>
-        Vous n'avez pas encore créé de groupe. Appuyez sur le bouton ci-dessus pour en créer un.
+        Vous n'avez pas encore créé de groupe. Appuyez sur le bouton ci-dessous pour en créer un.
       </InfoText>
       <CreateGroupButton />
     </div>

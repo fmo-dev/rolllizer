@@ -1,7 +1,7 @@
 import { Home } from "../../pages/common/Home";
 import Login from "../../pages/common/Login";
 import { SelectRole } from "../../pages/common/SelectRole";
-import { CreateGroup } from "../../pages/master/MasterHome/CreateGroup";
+import { GroupSettings } from "../../pages/master/GroupSettings";
 
 export const ROUTES = {
   login: {
@@ -18,6 +18,6 @@ export const ROUTES = {
   },
   createGroup: {
     path: 'master/create-group',
-    Component: CreateGroup
+    Component: GroupSettings
   }
 }
