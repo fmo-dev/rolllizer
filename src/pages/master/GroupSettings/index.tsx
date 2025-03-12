@@ -44,12 +44,14 @@ export const GroupSettings: React.FC = () => {
       owner_id: user.id,
       name
     }
-    const { data } = await api.from('group').upsert(groupData);
-    console.log(data)
-    // if (image) {
-    //   const imageUrl = await api.storage.from('images').upload("dfdf", image);
-    //   await api.from('groups').upsert({ id: data.id, image_url: imageUrl });
-    // }
+    const { data } = await api.from('group').upsert(groupData).select('id');
+    const id = data?.[0].id;
+    if (id && image) {
+      const { data } = await api.storage.from('images').upload(`group-${id}`, image, { upsert: true });
+      if (data?.fullPath) {
+        await api.from('groups').upsert({ id, image_url: data.fullPath });
+      }
+    }
   }
 
   if (isLoading) {

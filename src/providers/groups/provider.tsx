@@ -3,6 +3,7 @@ import { Group, UserGroups } from "./types";
 import { useAPI } from "../api/hooks";
 import { GroupContext } from "./context";
 import { useUser } from "../user/hooks";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const api = useAPI();
@@ -12,11 +13,24 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
     asPlayer: []
   });
 
+  const getGroupAsPlayer = useCallback(async () => {
+    if (user) {
+      const res = await api.from('player').select('group_id').eq('user_id', user.id);
+      const error = res.error
+      if (error) {
+        throw new Error(error.message)
+      }
+      const groupIds = res.data.map(({ group_id }) => group_id);
+      return api.from('group').select('*').in('id', groupIds);
+    }
+    return { data: [] } as unknown as PostgrestSingleResponse<Group>;
+  }, [user, api]);
+
   const getGroups = useCallback(async () => {
     if (user) {
       const res = await Promise.all([
         api.from('group').select('*, player(*)').eq('owner_id', user.id),
-        api.from('group').select('*, player(*)').eq('player.user_id', user.id)
+        getGroupAsPlayer()
       ])
       const error = res.find(r => r.error)?.error
       if (error) {
@@ -27,7 +41,7 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
         asPlayer: res[1].data as Group[]
       });
     }
-  }, [user, api])
+  }, [user, api, getGroupAsPlayer])
 
   useEffect(() => { getGroups() }, [getGroups])
 
