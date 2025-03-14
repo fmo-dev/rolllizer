@@ -1,0 +1,12 @@
+.player-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  & .player {
+    position: relative;
+    & .delete-player-button {
+      position: absolute;
+    }
+  }
+}

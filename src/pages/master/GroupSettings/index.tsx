@@ -12,6 +12,7 @@ import { ImageInput } from "../../../shared/components/Input/ImageInput";
 import { AppButton } from "../../../shared/components/Button";
 import { useAPI } from "../../../providers/api/hooks";
 import { useUser } from "../../../providers/user/hooks";
+import { PlayerInputs } from "./PlayerInputs";
 
 export const GroupSettings: React.FC = () => {
   const api = useAPI();
@@ -49,7 +50,7 @@ export const GroupSettings: React.FC = () => {
     if (id && image) {
       const { data } = await api.storage.from('images').upload(`group-${id}`, image, { upsert: true });
       if (data?.fullPath) {
-        await api.from('groups').upsert({ id, image_url: data.fullPath });
+        await api.from('group').update({ image_url: data.fullPath }).eq('id', id);
       }
     }
   }
@@ -63,20 +64,23 @@ export const GroupSettings: React.FC = () => {
         event.preventDefault();
         onSubmit();
       }}>
-        <TextField
-          label="Nom du groupe"
-          required
-          value={name}
-          onChange={({ target }) => setName(target.value)}
-          onBlur={() => setHasNameBeenBlurred(true)}
-          error={hasNameBeenBlurred && name.length === 0}
-          helperText={hasNameBeenBlurred && name.length === 0 ? 'Le nom du groupe est requis' : ''}
-        />
-        <div className="image-field">
-          <InputLabel>Image du groupe</InputLabel>
-          <ImageInput value={image} onChange={setImage} />
+        <div className="form-content">
+          <TextField
+            label="Nom du groupe"
+            required
+            value={name}
+            onChange={({ target }) => setName(target.value)}
+            onBlur={() => setHasNameBeenBlurred(true)}
+            error={hasNameBeenBlurred && name.length === 0}
+            helperText={hasNameBeenBlurred && name.length === 0 ? 'Le nom du groupe est requis' : ''}
+          />
+          <div className="image-field">
+            <InputLabel>Image du groupe</InputLabel>
+            <ImageInput value={image} onChange={setImage} />
+          </div>
+          <PlayerInputs />
         </div>
-        <AppButton variant="contained" type="submit">
+        <AppButton className="submit-button" variant="contained" type="submit">
           Valider
         </AppButton>
       </form>

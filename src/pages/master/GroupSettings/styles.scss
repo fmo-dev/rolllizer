@@ -3,13 +3,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  & .image-field {
+  min-height: calc(100vh - 140px);
+  margin-top: 48px;
+  & .form-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    & label {
-      color: var(--color-text);
+    gap: 16px;
+    flex: 1;
+    margin-bottom: 8px;
+    & .image-field {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & label {
+        color: var(--color-text);
+      }
     }
   }
 }
