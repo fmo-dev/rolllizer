@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useGroups } from "../../../providers/groups/hooks";
 import { useRouter } from "../../../providers/router/hooks";
 import { Loader } from "../../../shared/components/Loader";
-import { InputLabel, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, TextField, Typography } from "@mui/material";
 
 import "./styles.scss";
 import { ImageInput } from "../../../shared/components/Input/ImageInput";
@@ -22,8 +22,10 @@ export const GroupSettings: React.FC = () => {
   const { groups } = useGroups();
   const [group, setGroup] = useState<Partial<Group> | null>(null);
   const [name, setName] = useState<string>('');
+  const [players, setPlayers] = useState<string[]>([]);
   const [hasNameBeenBlurred, setHasNameBeenBlurred] = useState(false);
   const [image, setImage] = useState<File | null>(null);
+  const [isWarningModalOpened, setIWarningModalOpened] = useState(false);
 
   useEffect(() => {
     if (groupId) {
@@ -37,9 +39,13 @@ export const GroupSettings: React.FC = () => {
     }
   }, [groupId, groups.asOwner, navigate]);
 
-  const isLoading = groupId && !group
+  const isLoading = !!groupId && !group
 
-  const onSubmit = async () => {
+  const onSubmit = async (validateWithoutPlayer?: boolean) => {
+    if (!players.length && !validateWithoutPlayer) {
+      setIWarningModalOpened(true);
+      return;
+    }
     const groupData = {
       ...(groupId ? { id: groupId } : {}),
       owner_id: user.id,
@@ -55,6 +61,8 @@ export const GroupSettings: React.FC = () => {
     }
   }
 
+  const isFormDisabled = name.length === 0 || isLoading;
+
   if (isLoading) {
     return <Loader />
   }
@@ -68,6 +76,7 @@ export const GroupSettings: React.FC = () => {
           <TextField
             label="Nom du groupe"
             required
+            className="name-field"
             value={name}
             onChange={({ target }) => setName(target.value)}
             onBlur={() => setHasNameBeenBlurred(true)}
@@ -78,12 +87,33 @@ export const GroupSettings: React.FC = () => {
             <InputLabel>Image du groupe</InputLabel>
             <ImageInput value={image} onChange={setImage} />
           </div>
-          <PlayerInputs />
+          <PlayerInputs value={players} onChange={setPlayers} />
         </div>
-        <AppButton className="submit-button" variant="contained" type="submit">
+        <AppButton className="submit-button" variant="contained" type="submit" disabled={isFormDisabled}>
           Valider
         </AppButton>
       </form>
+      <Dialog
+        open={isWarningModalOpened}
+        onClose={() => setIWarningModalOpened(false)}
+      >
+        <DialogTitle style={{ fontSize: 16 }} >
+          Ce groupe ne contient aucun joueur
+        </DialogTitle>
+        <DialogContent style={{ fontSize: 15 }} >
+          Désirez-vous l'enregistrer quand même ?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIWarningModalOpened(false)}>Non</Button>
+          <Button onClick={() => {
+            setIWarningModalOpened(false);
+            onSubmit(true);
+          }}
+          >
+            Oui
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Page>
   )
 }

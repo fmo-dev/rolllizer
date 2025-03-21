@@ -3,29 +3,44 @@ import { Button, IconButton, InputLabel } from "@mui/material";
 import { useState } from "react";
 import "./styles.scss";
 import { AppInput } from "../../../../shared/components/Input";
+import { Player } from "./types";
 
-export const PlayerInputs = () => {
-  const [players, setPlayers] = useState([{ id: 0, name: '' }]);
+interface PlayerInputsProps {
+  onChange(players: string[]): void;
+  value: string[];
+}
+
+export const PlayerInputs: React.FC<PlayerInputsProps> = ({
+  value,
+  onChange
+}) => {
+  const [players, setPlayers] = useState<Player[]>(!value.length ? (
+    [{ id: 0, name: '' }]
+  ) : value.map((name, id) => ({ id, name })));
+
+  const updatePlayers = (newValue: Player[]) => {
+    setPlayers(newValue);
+    onChange(newValue.map(({ name }) => name));
+  }
 
   const addPlayer = () => {
-    setPlayers([...players, { id: Date.now(), name: '' }]);
+    updatePlayers([...players, { id: Date.now(), name: '' }]);
   };
 
   const removePlayer = (id: number) => {
     if (players.length > 1) {
-      setPlayers(players.filter((player) => player.id !== id));
+      updatePlayers(players.filter((player) => player.id !== id));
     } else {
-      setPlayers([{ id: 0, name: '' }]);
+      updatePlayers([{ id: 0, name: '' }]);
     }
   };
 
-  const updatePlayer = (id: number, value: string) => {
-    setPlayers((previousValue) =>
-      previousValue.map((player) =>
-        player.id === id ? { ...player, name: value } : player
-      )
-    );
+  const updatePlayerName = (id: number, value: string) => {
+    updatePlayers(players.map((player) =>
+      player.id === id ? { ...player, name: value } : player
+    ));
   };
+
   return (
     <div className="player-inputs">
       <InputLabel>Joueurs</InputLabel>
@@ -35,7 +50,7 @@ export const PlayerInputs = () => {
             size="small"
             placeholder="Nom du joueur"
             value={player.name}
-            onChange={({ target }) => updatePlayer(player.id, target.value)}
+            onChange={({ target }) => updatePlayerName(player.id, target.value)}
           />
           {(players.length > 1 || players[0]?.name != '') && (
             <IconButton className="delete-player-button" onClick={() => removePlayer(player.id)}>

@@ -12,10 +12,14 @@
     gap: 16px;
     flex: 1;
     margin-bottom: 8px;
+    & .name-field {
+      height: 80px;
+    }
     & .image-field {
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-bottom: 20px;
       & label {
         color: var(--color-text);
       }
