@@ -5,14 +5,15 @@ import { useParams } from "react-router-dom";
 import { useGroups } from "../../../providers/groups/hooks";
 import { useRouter } from "../../../providers/router/hooks";
 import { Loader } from "../../../shared/components/Loader";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, TextField, Typography } from "@mui/material";
+import { InputLabel, TextField } from "@mui/material";
 
 import "./styles.scss";
 import { ImageInput } from "../../../shared/components/Input/ImageInput";
-import { AppButton } from "../../../shared/components/Button";
 import { useAPI } from "../../../providers/api/hooks";
 import { useUser } from "../../../providers/user/hooks";
 import { PlayerInputs } from "./PlayerInputs";
+import { NoPlayerDialog } from "./NoPlayerDialog";
+import { ActionButton } from "../../../shared/components/Button/ActionButton";
 
 export const GroupSettings: React.FC = () => {
   const api = useAPI();
@@ -53,15 +54,23 @@ export const GroupSettings: React.FC = () => {
     }
     const { data } = await api.from('group').upsert(groupData).select('id');
     const id = data?.[0].id;
-    if (id && image) {
-      const { data } = await api.storage.from('images').upload(`group-${id}`, image, { upsert: true });
-      if (data?.fullPath) {
-        await api.from('group').update({ image_url: data.fullPath }).eq('id', id);
+    if (id) {
+      if (image) {
+        const { data } = await api.storage.from('images').upload(`group-${id}`, image, { upsert: true });
+        if (data?.fullPath) {
+          await api.from('group').update({ image_url: data.fullPath }).eq('id', id);
+        }
+      }
+      if (players.length) {
+        await api.from('player').insert(players.map(playerName => ({
+          group_id: id,
+          player_name: playerName
+        })));
       }
     }
   }
 
-  const isFormDisabled = name.length === 0 || isLoading;
+  const isFormDisabled = !name.length || isLoading;
 
   if (isLoading) {
     return <Loader />
@@ -80,8 +89,8 @@ export const GroupSettings: React.FC = () => {
             value={name}
             onChange={({ target }) => setName(target.value)}
             onBlur={() => setHasNameBeenBlurred(true)}
-            error={hasNameBeenBlurred && name.length === 0}
-            helperText={hasNameBeenBlurred && name.length === 0 ? 'Le nom du groupe est requis' : ''}
+            error={hasNameBeenBlurred && !name.length}
+            helperText={hasNameBeenBlurred && !name.length ? 'Le nom du groupe est requis' : ''}
           />
           <div className="image-field">
             <InputLabel>Image du groupe</InputLabel>
@@ -89,31 +98,16 @@ export const GroupSettings: React.FC = () => {
           </div>
           <PlayerInputs value={players} onChange={setPlayers} />
         </div>
-        <AppButton className="submit-button" variant="contained" type="submit" disabled={isFormDisabled}>
+        <ActionButton className="submit-button" variant="contained" type="submit" disabled={isFormDisabled}>
           Valider
-        </AppButton>
+        </ActionButton>
       </form>
-      <Dialog
-        open={isWarningModalOpened}
-        onClose={() => setIWarningModalOpened(false)}
-      >
-        <DialogTitle style={{ fontSize: 16 }} >
-          Ce groupe ne contient aucun joueur
-        </DialogTitle>
-        <DialogContent style={{ fontSize: 15 }} >
-          Désirez-vous l'enregistrer quand même ?
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setIWarningModalOpened(false)}>Non</Button>
-          <Button onClick={() => {
-            setIWarningModalOpened(false);
-            onSubmit(true);
-          }}
-          >
-            Oui
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {isWarningModalOpened && (
+        <NoPlayerDialog
+          onClose={() => setIWarningModalOpened(false)}
+          onConfirm={() => onSubmit(true)}
+        />
+      )}
     </Page>
   )
 }

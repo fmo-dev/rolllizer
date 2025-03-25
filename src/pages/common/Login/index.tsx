@@ -49,9 +49,9 @@ const Login = () => {
     <Page id='login-page' title='Connexion'>
       <div className='form-container'>
         <form className='form'>
-          <div>
+          <div className='login-back-button-container'>
             {currentStep === LoginStep.OTP && (
-              <AppButton className='back-button' onClick={() => setCurrentStep(LoginStep.PHONE)}>
+              <AppButton className='login-back-button' onClick={() => setCurrentStep(LoginStep.PHONE)}>
                 <ArrowBackIcon /> Retour
               </AppButton>
             )}

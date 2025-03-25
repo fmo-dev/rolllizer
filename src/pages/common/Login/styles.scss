@@ -9,13 +9,14 @@
     gap: 24px;
     & .form {
       display: flex;
-      transform: translateY(-50%);
       flex-direction: column;
       gap: 24px;
-      .back-button {
-        display: flex;
-        align-items: center;
-        gap: 8px;
+      .login-back-button-container {
+        align-self: flex-start;
+        .login-back-button {
+          display: flex;
+          gap: 8px;
+        }
       }
     }
   }

@@ -20,7 +20,7 @@ export const PlayerInputs: React.FC<PlayerInputsProps> = ({
 
   const updatePlayers = (newValue: Player[]) => {
     setPlayers(newValue);
-    onChange(newValue.map(({ name }) => name));
+    onChange(newValue.map(({ name }) => name || null).filter(Boolean) as string[]);
   }
 
   const addPlayer = () => {
