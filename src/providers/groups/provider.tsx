@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
-import { Group, UserGroups } from "./types";
+import { GroupType, UserGroups } from "./types";
 import { useAPI } from "../api/hooks";
 import { GroupContext } from "./context";
 import { useUser } from "../user/hooks";
@@ -23,10 +23,10 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
       const groupIds = res.data.map(({ group_id }) => group_id);
       return api.from('group').select('*').in('id', groupIds);
     }
-    return { data: [] } as unknown as PostgrestSingleResponse<Group>;
+    return { data: [] } as unknown as PostgrestSingleResponse<GroupType>;
   }, [user, api]);
 
-  const getGroups = useCallback(async () => {
+  const fetchGroups = useCallback(async () => {
     if (user) {
       const res = await Promise.all([
         api.from('group').select('*, player(*)').eq('owner_id', user.id),
@@ -37,16 +37,18 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
         throw new Error(error.message)
       }
       setGroups({
-        asOwner: res[0].data as Group[],
-        asPlayer: res[1].data as Group[]
+        asOwner: res[0].data as GroupType[],
+        asPlayer: res[1].data as GroupType[]
       });
     }
   }, [user, api, getGroupAsPlayer])
 
-  useEffect(() => { getGroups() }, [getGroups])
+
+  useEffect(() => { fetchGroups() }, [fetchGroups])
+
 
   return (
-    <GroupContext.Provider value={{ groups }}>
+    <GroupContext.Provider value={{ groups, refetchGroups: fetchGroups }}>
       {children}
     </GroupContext.Provider>
   );

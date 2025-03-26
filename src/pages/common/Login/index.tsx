@@ -10,7 +10,7 @@ import './styles.scss'
 import { Page } from '../../../shared/components/Page';
 import { AppButton } from '../../../shared/components/Button';
 
-const Login = () => {
+const Login: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(LoginStep.PHONE);
   const { auth, sendOTP } = useAuthentication();
   const [isLoading, setIsLoading] = useState(false);

@@ -1,11 +1,11 @@
 export type UserProfile = 'master' | 'player'
 
 export interface UserGroups {
-  asOwner: Group[];
-  asPlayer: Group[];
+  asOwner: GroupType[];
+  asPlayer: GroupType[];
 }
 
-export interface Group {
+export interface GroupType {
   id: number;
   name: string;
   ownerId: number;

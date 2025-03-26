@@ -5,6 +5,7 @@ import { Page } from "../../../shared/components/Page";
 import { useGroups } from "../../../providers/groups/hooks";
 import { InfoText } from "../../../shared/components/InfoText";
 import { CreateGroupButton } from "./CreateGroupButton";
+import { Group } from "./Group";
 
 export const MasterHome: React.FC = () => {
   const { groups } = useGroups();
@@ -22,6 +23,7 @@ export const MasterHome: React.FC = () => {
 
   return (
     <Page cantGoBack id="master-home-page" title='Tableau de bord du MJ'>
+      {groups.asOwner?.map((group) => <Group key={group.id} group={group} />)}
       {createGroupButtonRender}
     </Page>
   );

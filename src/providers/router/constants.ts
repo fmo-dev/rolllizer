@@ -19,5 +19,9 @@ export const ROUTES = {
   createGroup: {
     path: 'master/create-group',
     Component: GroupSettings
+  },
+  editGroup: {
+    path: (id: string) => `master/edit-group/${id}`,
+    Component: GroupSettings
   }
 }

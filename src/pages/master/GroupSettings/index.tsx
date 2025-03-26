@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Group } from "../../../providers/groups/types";
+import { GroupType } from "../../../providers/groups/types";
 import { Page } from "../../../shared/components/Page";
 import { useParams } from "react-router-dom";
 import { useGroups } from "../../../providers/groups/hooks";
@@ -20,13 +20,14 @@ export const GroupSettings: React.FC = () => {
   const { user } = useUser();
   const { navigate } = useRouter();
   const { groupId } = useParams<{ groupId?: string }>();
-  const { groups } = useGroups();
-  const [group, setGroup] = useState<Partial<Group> | null>(null);
+  const { groups, refetchGroups } = useGroups();
+  const [group, setGroup] = useState<Partial<GroupType> | null>(null);
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<string[]>([]);
   const [hasNameBeenBlurred, setHasNameBeenBlurred] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [isWarningModalOpened, setIWarningModalOpened] = useState(false);
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
   useEffect(() => {
     if (groupId) {
@@ -43,6 +44,7 @@ export const GroupSettings: React.FC = () => {
   const isLoading = !!groupId && !group
 
   const onSubmit = async (validateWithoutPlayer?: boolean) => {
+    setIsSubmitLoading(true);
     if (!players.length && !validateWithoutPlayer) {
       setIWarningModalOpened(true);
       return;
@@ -67,7 +69,10 @@ export const GroupSettings: React.FC = () => {
           player_name: playerName
         })));
       }
+      await refetchGroups();
+      navigate('home');
     }
+    setIsSubmitLoading(false);
   }
 
   const isFormDisabled = !name.length || isLoading;
@@ -98,7 +103,7 @@ export const GroupSettings: React.FC = () => {
           </div>
           <PlayerInputs value={players} onChange={setPlayers} />
         </div>
-        <ActionButton className="submit-button" variant="contained" type="submit" disabled={isFormDisabled}>
+        <ActionButton loading={isSubmitLoading} className="submit-button" variant="contained" type="submit" disabled={isFormDisabled}>
           Valider
         </ActionButton>
       </form>
