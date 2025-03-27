@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import { ROUTES } from "./constants";
+import { NavigateFn } from "./types";
 
 interface RouterContextState {
-  navigate(path: keyof typeof ROUTES): Promise<void> | void;
+  navigate: NavigateFn;
   goBack(): Promise<void> | void;
 }
 

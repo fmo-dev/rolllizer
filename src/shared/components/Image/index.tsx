@@ -3,10 +3,26 @@ import { cn } from "../../utils";
 import './styles.scss';
 import { Box, SxProps } from "@mui/material";
 
-export const AppImage: React.FC<ImgHTMLAttributes<HTMLImageElement>> = (props) => {
+
+interface AppImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+  path?: string;
+}
+
+export const AppImage: React.FC<AppImageProps> = ({
+  path,
+  src,
+  ...props
+}) => {
+  const getFullImageURL = () => (
+    `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/${path}`
+  )
+
   return (
     <Box sx={styles.box}>
-      <img {...props} className={cn("app-image", props.className)} />
+      <img
+        {...props}
+        src={path ? getFullImageURL() : src}
+        className={cn("app-image", props.className)} />
     </Box>
   );
 };

@@ -23,7 +23,9 @@ export const MasterHome: React.FC = () => {
 
   return (
     <Page cantGoBack id="master-home-page" title='Tableau de bord du MJ'>
-      {groups.asOwner?.map((group) => <Group key={group.id} group={group} />)}
+      <div className="group-list">
+        {groups.asOwner?.map((group) => <Group key={group.id} group={group} />)}
+      </div>
       {createGroupButtonRender}
     </Page>
   );

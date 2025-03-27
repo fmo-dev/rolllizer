@@ -8,12 +8,12 @@ export interface UserGroups {
 export interface GroupType {
   id: number;
   name: string;
-  ownerId: number;
-  imageUrl: string;
+  owner_id: number;
+  image_url: string;
 }
 
 export interface GroupPlayer {
   id: number;
-  userId: number;
-  playerName: string;
+  user_id: number;
+  player_name: string;
 }

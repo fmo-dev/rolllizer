@@ -1,5 +1,8 @@
 import { GroupType } from "../../../../providers/groups/types";
 import { useRouter } from "../../../../providers/router/hooks";
+import { AppButton } from "../../../../shared/components/Button";
+import { AppImage } from "../../../../shared/components/Image";
+import './styles.scss'
 
 interface GroupProps {
   group: GroupType;
@@ -9,8 +12,14 @@ export const Group: React.FC<GroupProps> = ({ group }) => {
   const { navigate } = useRouter();
 
   const handleClick = () => {
-    navigate(`/group/${group.id}`);
+    navigate('editGroup', group.id);
   }
 
-  return group.name
+  return (
+    <div className="group">
+      <h2 className="group-name">{group.name}</h2>
+      {group.image_url && <AppImage path={group.image_url} alt={group.name} />}
+      <AppButton variant="contained" onClick={handleClick}>Edit</AppButton>
+    </div>
+  )
 } 

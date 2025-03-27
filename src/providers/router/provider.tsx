@@ -7,7 +7,7 @@ import { NavigateFn } from "./types";
 export const RouterContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const _navigate = useNavigate();
 
-  const navigate: NavigateFn = useCallback((pathName, params) => {
+  const navigate: NavigateFn = useCallback((pathName, ...params) => {
     const path = ROUTES[pathName].path;
     if (path instanceof Function) {
       _navigate(path(...params as Parameters<typeof path>));

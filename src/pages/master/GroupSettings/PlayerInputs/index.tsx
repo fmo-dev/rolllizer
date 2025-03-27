@@ -25,6 +25,10 @@ export const PlayerInputs: React.FC<PlayerInputsProps> = ({
 
   const addPlayer = () => {
     updatePlayers([...players, { id: Date.now(), name: '' }]);
+    setTimeout(() => {
+      const inputs = document.querySelectorAll('.player-inputs .player input') as NodeListOf<HTMLInputElement>;
+      inputs[inputs.length - 1]?.focus();
+    })
   };
 
   const removePlayer = (id: number) => {

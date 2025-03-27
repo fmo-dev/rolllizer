@@ -21,7 +21,7 @@ export const ROUTES = {
     Component: GroupSettings
   },
   editGroup: {
-    path: (id: string) => `master/edit-group/${id}`,
+    path: (id: number) => `master/edit-group/${id}`,
     Component: GroupSettings
   }
 }
