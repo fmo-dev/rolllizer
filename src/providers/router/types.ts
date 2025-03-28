@@ -1,7 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ROUTES } from "./constants";
 
-export type NavigateFn = <K extends keyof typeof ROUTES, P extends typeof ROUTES[K]['path']>(
+type PathToParams<T extends string> = (T extends `${string}:${1 | 2 | 3 | 4}${infer U}`
+  ? [string | number, ...PathToParams<U>]
+  : []);
+
+
+export type NavigateFn = <
+  K extends keyof typeof ROUTES,
+  P extends typeof ROUTES[K]['path']
+>(
   path: K,
-  ...param: P extends (...args: any) => any ? Parameters<P> : []
+  ...param: PathToParams<P>
 ) => void;
+
