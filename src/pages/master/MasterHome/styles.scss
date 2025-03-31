@@ -1,10 +1,15 @@
-.no-group {
-  margin: auto;
+.button-container {
   display: flex;
   flex-direction: column;
   gap: 12px;
   align-items: center;
-  transform: translateY(-50%);
+  &.no-group {
+    margin: auto;
+    transform: translateY(-50%);
+  }
+  &:not(.no-group) {
+    margin-top: 24px;
+  }
 }
 .group-list {
   display: flex;

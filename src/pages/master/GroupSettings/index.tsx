@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { GroupType } from "../../../providers/groups/types";
 import { Page } from "../../../shared/components/Page";
-import { useParams } from "react-router-dom";
 import { useGroups } from "../../../providers/groups/hooks";
 import { useRouter } from "../../../providers/router/hooks";
 import { Loader } from "../../../shared/components/Loader";
@@ -14,12 +13,13 @@ import { useUser } from "../../../providers/user/hooks";
 import { PlayerInputs } from "./PlayerInputs";
 import { NoPlayerDialog } from "./NoPlayerDialog";
 import { ActionButton } from "../../../shared/components/Button/ActionButton";
+import { useAppParams } from "../../../providers/params/hooks";
 
 export const GroupSettings: React.FC = () => {
   const api = useAPI();
   const { user } = useUser();
   const { navigate } = useRouter();
-  const { groupId } = useParams<{ groupId?: string }>();
+  const [groupId] = useAppParams();
   const { groups, refetchGroups } = useGroups();
   const [group, setGroup] = useState<Partial<GroupType> | null>(null);
   const [name, setName] = useState<string>('');
@@ -28,7 +28,7 @@ export const GroupSettings: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [isWarningModalOpened, setIWarningModalOpened] = useState(false);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-
+  console.log(groupId)
   useEffect(() => {
     if (groupId) {
       const currentGroup = groups.asOwner.find(({ id }) => id.toString() === groupId);
@@ -37,6 +37,7 @@ export const GroupSettings: React.FC = () => {
       } else {
         setGroup(currentGroup);
         setName(currentGroup.name);
+        console.log(currentGroup)
       }
     }
   }, [groupId, groups.asOwner, navigate]);

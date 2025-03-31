@@ -1,7 +1,7 @@
 
 import { ROUTES } from "./constants";
 
-type PathToParams<T extends string> = (T extends `${string}:${1 | 2 | 3 | 4}${infer U}`
+type PathToParams<T extends string> = (T extends `${string}:${number}${infer U}`
   ? [string | number, ...PathToParams<U>]
   : []);
 

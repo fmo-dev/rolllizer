@@ -19,7 +19,7 @@ export const Group: React.FC<GroupProps> = ({ group }) => {
     <div className="group">
       <h2 className="group-name">{group.name}</h2>
       {group.image_url && <AppImage path={group.image_url} alt={group.name} />}
-      <AppButton variant="contained" onClick={handleClick}>Edit</AppButton>
+      <AppButton variant="contained" onClick={handleClick}>Gérer le groupe</AppButton>
     </div>
   )
 } 
