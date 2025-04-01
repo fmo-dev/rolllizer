@@ -13,22 +13,22 @@ import { useUser } from "../../../providers/user/hooks";
 import { PlayerInputs } from "./PlayerInputs";
 import { NoPlayerDialog } from "./NoPlayerDialog";
 import { ActionButton } from "../../../shared/components/Button/ActionButton";
-import { useAppParams } from "../../../providers/params/hooks";
+import { useRouteParams } from "../../../providers/route-params/hooks";
 
 export const GroupSettings: React.FC = () => {
   const api = useAPI();
   const { user } = useUser();
   const { navigate } = useRouter();
-  const [groupId] = useAppParams();
+  const [groupId] = useRouteParams();
   const { groups, refetchGroups } = useGroups();
   const [group, setGroup] = useState<Partial<GroupType> | null>(null);
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<string[]>([]);
   const [hasNameBeenBlurred, setHasNameBeenBlurred] = useState(false);
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File | string | null>(null);
   const [isWarningModalOpened, setIWarningModalOpened] = useState(false);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  console.log(groupId)
+
   useEffect(() => {
     if (groupId) {
       const currentGroup = groups.asOwner.find(({ id }) => id.toString() === groupId);
@@ -36,8 +36,8 @@ export const GroupSettings: React.FC = () => {
         navigate('home');
       } else {
         setGroup(currentGroup);
+        setImage(currentGroup.image_url || null);
         setName(currentGroup.name);
-        console.log(currentGroup)
       }
     }
   }, [groupId, groups.asOwner, navigate]);
@@ -58,8 +58,9 @@ export const GroupSettings: React.FC = () => {
     const { data } = await api.from('group').upsert(groupData).select('id');
     const id = data?.[0].id;
     if (id) {
-      if (image) {
-        const { data } = await api.storage.from('images').upload(`group-${id}`, image, { upsert: true });
+      if (image && image instanceof File) {
+        const { data } = await api.storage.from('images').upload(`group-${id}.${Date.now()}`, image, { upsert: true });
+        console.log(data);
         if (data?.fullPath) {
           await api.from('group').update({ image_url: data.fullPath }).eq('id', id);
         }

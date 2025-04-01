@@ -6,7 +6,7 @@ import { AppImage } from "../../Image";
 
 interface ImageInputProps {
   onChange(file: File | null): void;
-  value: File | null;
+  value: File | string | null;
 }
 
 export const ImageInput: React.FC<ImageInputProps> = ({ onChange, value }) => {
@@ -25,7 +25,10 @@ export const ImageInput: React.FC<ImageInputProps> = ({ onChange, value }) => {
                 e.preventDefault();
               }}
             />
-            <AppImage src={URL.createObjectURL(value)} alt="" />
+            <AppImage
+              src={typeof value === 'string' ? undefined : URL.createObjectURL(value)}
+              path={typeof value === 'string' ? value : undefined}
+            />
           </>
         )}
         <span className="image-input-button-text">{value ? "Changer l'image" : "Choisir une image"}</span>
