@@ -3,28 +3,27 @@ import { Button, IconButton, InputLabel } from "@mui/material";
 import { useState } from "react";
 import "./styles.scss";
 import { AppInput } from "../../../../shared/components/Input";
-import { Player } from "./types";
+import { GroupPlayer } from "../../../../providers/groups/types";
+import { getDefaultPlayer } from "./utils";
 
 interface PlayerInputsProps {
-  onChange(players: string[]): void;
-  value: string[];
+  onChange(players: GroupPlayer[]): void;
+  value: GroupPlayer[];
 }
 
 export const PlayerInputs: React.FC<PlayerInputsProps> = ({
   value,
   onChange
 }) => {
-  const [players, setPlayers] = useState<Player[]>(!value.length ? (
-    [{ id: 0, name: '' }]
-  ) : value.map((name, id) => ({ id, name })));
+  const [players, setPlayers] = useState(!value.length ? [getDefaultPlayer()] : value);
 
-  const updatePlayers = (newValue: Player[]) => {
+  const updatePlayers = (newValue: GroupPlayer[]) => {
     setPlayers(newValue);
-    onChange(newValue.map(({ name }) => name || null).filter(Boolean) as string[]);
+    onChange(newValue.filter((player) => player.player_name));
   }
 
   const addPlayer = () => {
-    updatePlayers([...players, { id: Date.now(), name: '' }]);
+    updatePlayers([...players, getDefaultPlayer()]);
     setTimeout(() => {
       const inputs = document.querySelectorAll('.player-inputs .player input') as NodeListOf<HTMLInputElement>;
       inputs[inputs.length - 1]?.focus();
@@ -35,13 +34,13 @@ export const PlayerInputs: React.FC<PlayerInputsProps> = ({
     if (players.length > 1) {
       updatePlayers(players.filter((player) => player.id !== id));
     } else {
-      updatePlayers([{ id: 0, name: '' }]);
+      updatePlayers([getDefaultPlayer()]);
     }
   };
 
   const updatePlayerName = (id: number, value: string) => {
     updatePlayers(players.map((player) =>
-      player.id === id ? { ...player, name: value } : player
+      player.id === id ? { ...player, player_name: value } : player
     ));
   };
 
@@ -53,10 +52,10 @@ export const PlayerInputs: React.FC<PlayerInputsProps> = ({
           <AppInput
             size="small"
             placeholder="Nom du joueur"
-            value={player.name}
+            value={player.player_name}
             onChange={({ target }) => updatePlayerName(player.id, target.value)}
           />
-          {(players.length > 1 || players[0]?.name != '') && (
+          {(players.length > 1 || players[0]?.player_name != '') && (
             <IconButton className="delete-player-button" onClick={() => removePlayer(player.id)}>
               <DeleteIcon />
             </IconButton>

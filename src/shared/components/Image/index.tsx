@@ -4,7 +4,6 @@ import './styles.scss';
 import { Box, SxProps } from "@mui/material";
 import { Loader } from "../Loader";
 
-
 interface AppImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   path?: string;
 }
@@ -31,7 +30,6 @@ export const AppImage: React.FC<AppImageProps> = ({
     </Box>
   );
 };
-
 
 const styles: Record<string, SxProps> = {
   box: {

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { GroupType } from "../../../providers/groups/types";
+import { GroupPlayer, GroupType } from "../../../providers/groups/types";
 import { Page } from "../../../shared/components/Page";
 import { useGroups } from "../../../providers/groups/hooks";
 import { useRouter } from "../../../providers/router/hooks";
 import { Loader } from "../../../shared/components/Loader";
 import { InputLabel, TextField } from "@mui/material";
+
+import _map from "lodash/map";
 
 import "./styles.scss";
 import { ImageInput } from "../../../shared/components/Input/ImageInput";
@@ -23,7 +25,7 @@ export const GroupSettings: React.FC = () => {
   const { groups, refetchGroups } = useGroups();
   const [group, setGroup] = useState<Partial<GroupType> | null>(null);
   const [name, setName] = useState<string>('');
-  const [players, setPlayers] = useState<string[]>([]);
+  const [players, setPlayers] = useState<GroupPlayer[]>([]);
   const [hasNameBeenBlurred, setHasNameBeenBlurred] = useState(false);
   const [image, setImage] = useState<File | string | null>(null);
   const [isWarningModalOpened, setIWarningModalOpened] = useState(false);
@@ -38,6 +40,7 @@ export const GroupSettings: React.FC = () => {
         setGroup(currentGroup);
         setImage(currentGroup.image_url || null);
         setName(currentGroup.name);
+        setPlayers(currentGroup.player || [])
       }
     }
   }, [groupId, groups.asOwner, navigate]);
@@ -66,10 +69,24 @@ export const GroupSettings: React.FC = () => {
         }
       }
       if (players.length) {
-        await api.from('player').insert(players.map(playerName => ({
-          group_id: id,
-          player_name: playerName
-        })));
+        const playersToInsert = players.filter(({ id }) => !_map(group?.player, 'id').includes(id));
+        const playersToDelete = group?.player?.filter(({ id }) => !players.map(player => player.id).includes(id));
+        const playersToUpdate = players.filter((player) => group?.player?.some(({ player_name, id }) => player.id === id && player.player_name !== player_name));
+        if (playersToDelete?.length) {
+          await api.from('player').delete().in('id', playersToDelete.map(({ id }) => id));
+        }
+        if (playersToInsert?.length) {
+          await api.from('player').upsert(playersToInsert.map(({ player_name }) => ({
+            group_id: id,
+            player_name
+          })));
+        }
+        if (playersToUpdate?.length) {
+          await api.from('player').upsert(playersToUpdate.map(({ player_name, id }) => ({
+            group_id: id,
+            player_name
+          })));
+        }
       }
       await refetchGroups();
       navigate('home');
