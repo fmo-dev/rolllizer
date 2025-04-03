@@ -59,13 +59,13 @@ export const GroupSettings: React.FC = () => {
       name
     }
     const { data } = await api.from('group').upsert(groupData).select('id');
-    const id = data?.[0].id;
-    if (id) {
+    const newGroupId = data?.[0].id;
+    if (newGroupId) {
       if (image && image instanceof File) {
-        const { data } = await api.storage.from('images').upload(`group-${id}.${Date.now()}`, image, { upsert: true });
+        const { data } = await api.storage.from('images').upload(`group-${newGroupId}.${Date.now()}`, image, { upsert: true });
         console.log(data);
         if (data?.fullPath) {
-          await api.from('group').update({ image_url: data.fullPath }).eq('id', id);
+          await api.from('group').update({ image_url: data.fullPath }).eq('id', newGroupId);
         }
       }
       if (players.length) {
@@ -73,17 +73,19 @@ export const GroupSettings: React.FC = () => {
         const playersToDelete = group?.player?.filter(({ id }) => !players.map(player => player.id).includes(id));
         const playersToUpdate = players.filter((player) => group?.player?.some(({ player_name, id }) => player.id === id && player.player_name !== player_name));
         if (playersToDelete?.length) {
+          console.log(playersToDelete.map(({ id }) => id));
           await api.from('player').delete().in('id', playersToDelete.map(({ id }) => id));
         }
         if (playersToInsert?.length) {
           await api.from('player').upsert(playersToInsert.map(({ player_name }) => ({
-            group_id: id,
+            group_id: newGroupId,
             player_name
           })));
         }
         if (playersToUpdate?.length) {
           await api.from('player').upsert(playersToUpdate.map(({ player_name, id }) => ({
-            group_id: id,
+            id,
+            group_id: newGroupId,
             player_name
           })));
         }
