@@ -1,10 +1,21 @@
 .main-layout {
-  display: flex;
-  flex-direction: column;
   height: 100vh;
-  background-color: var(--color-background);
-  box-sizing: border-box;
-  & .container {
-    height: 100%;
+  &-body {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: var(--color-background);
+    height: calc(100vh - 56px); // 56px is the height of the footer
+    &-content {
+      height: 100%;
+    }
+  }
+  &-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background-color: var(--color-background);
   }
 }
