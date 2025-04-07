@@ -63,7 +63,6 @@ export const GroupSettings: React.FC = () => {
     if (newGroupId) {
       if (image && image instanceof File) {
         const { data } = await api.storage.from('images').upload(`group-${newGroupId}.${Date.now()}`, image, { upsert: true });
-        console.log(data);
         if (data?.fullPath) {
           await api.from('group').update({ image_url: data.fullPath }).eq('id', newGroupId);
         }
@@ -73,7 +72,6 @@ export const GroupSettings: React.FC = () => {
         const playersToDelete = group?.player?.filter(({ id }) => !players.map(player => player.id).includes(id));
         const playersToUpdate = players.filter((player) => group?.player?.some(({ player_name, id }) => player.id === id && player.player_name !== player_name));
         if (playersToDelete?.length) {
-          console.log(playersToDelete.map(({ id }) => id));
           await api.from('player').delete().in('id', playersToDelete.map(({ id }) => id));
         }
         if (playersToInsert?.length) {

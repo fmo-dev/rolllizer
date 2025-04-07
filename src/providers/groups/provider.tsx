@@ -13,6 +13,12 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
     asPlayer: []
   });
 
+  const getGroupQuery = useCallback(() => (
+    api.from('group').select('*, player(*)').order('created_at', {
+      referencedTable: 'player'
+    })
+  ), [api]);
+
   const getGroupAsPlayer = useCallback(async () => {
     if (user) {
       const res = await api.from('player').select('group_id').eq('user_id', user.id);
@@ -21,15 +27,15 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
         throw new Error(error.message)
       }
       const groupIds = res.data.map(({ group_id }) => group_id);
-      return api.from('group').select('*').in('id', groupIds);
+      return getGroupQuery().in('id', groupIds);
     }
     return { data: [] } as unknown as PostgrestSingleResponse<GroupType>;
-  }, [user, api]);
+  }, [user, api, getGroupQuery]);
 
   const fetchGroups = useCallback(async () => {
     if (user) {
       const res = await Promise.all([
-        api.from('group').select('*, player(*)').eq('owner_id', user.id),
+        getGroupQuery().eq('owner_id', user.id),
         getGroupAsPlayer()
       ])
       const error = res.find(r => r.error)?.error
@@ -41,7 +47,7 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
         asPlayer: res[1].data as GroupType[]
       });
     }
-  }, [user, api, getGroupAsPlayer])
+  }, [user, getGroupAsPlayer, getGroupQuery]);
 
 
   useEffect(() => { fetchGroups() }, [fetchGroups])
