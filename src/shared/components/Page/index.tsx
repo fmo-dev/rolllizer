@@ -10,7 +10,6 @@ interface PageProps extends HTMLAttributes<HTMLDivElement> {
   cantGoBack?: boolean;
 }
 
-
 export const Page: React.FC<PageProps> = ({ children, title, cantGoBack, ...props }) => {
   const router = useRouter();
 

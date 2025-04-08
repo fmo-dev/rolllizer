@@ -1,20 +1,22 @@
-import { Home } from "../../pages/common/Home";
 import Login from "../../pages/common/Login";
+import { Profile } from "../../pages/common/Profile";
 import { SelectRole } from "../../pages/common/SelectRole";
 import { GroupSettings } from "../../pages/master/GroupSettings";
+import { MasterHome } from "../../pages/master/MasterHome";
+import { PlayerHome } from "../../pages/player/PlayerHome";
 
 export const ROUTES = {
   login: {
-    path: '/login',
+    path: 'login',
     Component: Login
   },
   selectRole: {
-    path: '/select-profile',
+    path: 'select-profile',
     Component: SelectRole
   },
-  home: {
-    path: '/',
-    Component: Home
+  masterHome: {
+    path: 'master',
+    Component: MasterHome
   },
   createGroup: {
     path: 'master/create-group',
@@ -23,5 +25,13 @@ export const ROUTES = {
   editGroup: {
     path: `master/edit-group/:1`,
     Component: GroupSettings
-  }
+  },
+  playerHome: {
+    path: 'player',
+    Component: PlayerHome
+  },
+  profile: {
+    path: 'profile',
+    Component: Profile
+  },
 } as const

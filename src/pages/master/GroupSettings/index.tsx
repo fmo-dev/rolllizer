@@ -35,7 +35,7 @@ export const GroupSettings: React.FC = () => {
     if (groupId) {
       const currentGroup = groups.asOwner.find(({ id }) => id.toString() === groupId);
       if (!currentGroup) {
-        navigate('home');
+        navigate('masterHome');
       } else {
         setGroup(currentGroup);
         setImage(currentGroup.image_url || null);
@@ -89,7 +89,7 @@ export const GroupSettings: React.FC = () => {
         }
       }
       await refetchGroups();
-      navigate('home');
+      navigate('masterHome');
     }
     setIsSubmitLoading(false);
   }

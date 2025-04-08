@@ -1,0 +1,7 @@
+.footer {
+  & .navigation-icon {
+    & svg {
+      fill: var(--color-grey);
+    }
+  }
+}
