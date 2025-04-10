@@ -4,19 +4,20 @@ import "./styles.scss";
 import { useAuthentication } from "../../providers/authentication/hooks";
 import { Loader } from "../../shared/components/Loader";
 import { Footer } from "../Footer";
+import { cn } from "../../shared/utils";
 
 export const MainLayout: React.FC<PropsWithChildren> = () => {
-  const { isAuthLoading } = useAuthentication();
+  const { isAuthLoading, user } = useAuthentication();
 
   return (
     <div className="main-layout">
-      <div className="main-layout-body">
+      <div className={cn("main-layout-body", { "with-footer": !!user })}>
         <div className="main-layout-body-content">
           {isAuthLoading && <Loader />}
           {!isAuthLoading && <Outlet />}
         </div>
       </div>
-      <Footer />
-    </div>
+      {user && <Footer />}
+    </div >
   )
 }

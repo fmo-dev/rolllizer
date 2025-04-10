@@ -20,17 +20,18 @@ export const Footer: React.FC = () => {
       setCurrentValue(currentLink?.value);
     }
   }, [currentValue, pathname]);
-
   return (
-    <Paper className="footer" elevation={3}>
+    <Paper elevation={3}>
       <BottomNavigation
+        className="footer"
         onChange={(_, newValue) => {
+          setCurrentValue(newValue);
           navigate(newValue);
         }}
       >
         {BOTTOM_LINKS.map(({ value, Icon }) => (
           <BottomNavigationAction
-            className={cn('navigation-icon', { isCurrent: currentValue === value })}
+            className={cn('navigation-icon', { "is-current": currentValue === value })}
 
             key={value}
             value={value}

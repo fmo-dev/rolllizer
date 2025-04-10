@@ -1,12 +1,5 @@
 import { createTheme } from "@mui/material";
 
-// --color-main: #056842;
-// --color-white: #f9f6c9;
-// --color-background: #fffbbd;
-// --color-danger: #ca3c25;
-// --color-success: #7fb069;
-// --color-warning: #e6aa68;
-// --color-text: #29302d;
 const palette = {
   main: '#056842',
   secondary: '#fffbbd',

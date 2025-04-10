@@ -5,7 +5,13 @@
     flex-direction: column;
     box-sizing: border-box;
     background-color: var(--color-background);
-    height: calc(100vh - 56px); // 56px is the height of the footer
+    height: 100%;
+    &.with-footer {
+      height: calc(100vh - 56px); // 56px is the height of the footer
+    }
+    &:not(.with-footer) {
+      padding-top: 56px;
+    }
     &-content {
       height: 100%;
     }

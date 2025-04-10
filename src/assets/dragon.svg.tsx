@@ -3,8 +3,9 @@ const DragonIcon: React.FC = () => (
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 260 174"
 		fill="#000"
-		width="46px"
-		height="46px"
+		width="32px"
+		height="32px"
+		stroke-width="6px"
 	>
 		<path d={`M252.59,84.22c-22.12,3.78-38.96,23.03-38.96,46.23c0,2.63,0.23,5.21,0.65,7.73c-1.7-0.12-3.42-0.19-5.15-0.19
 	c-25.16,0-42.24,13.63-49.13,34.01h-60c-6.64-20.38-23.97-34.01-49.13-34.01c-1.73,0-3.45,0.07-5.15,0.19
@@ -22,4 +23,5 @@ const DragonIcon: React.FC = () => (
 		/>
 	</svg>
 );
+
 export default DragonIcon;

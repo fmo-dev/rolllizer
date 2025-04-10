@@ -6,6 +6,7 @@ interface AuthenticationContextState {
   sendOTP(phone: string, otp: string): Promise<void>;
   user: User | null;
   isAuthLoading: boolean;
+  logout(): Promise<void>;
 }
 
 export const AuthenticationContext = createContext({} as AuthenticationContextState);

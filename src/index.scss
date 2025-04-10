@@ -12,6 +12,7 @@
   --color-text: #29302d;
   --color-grey: #666666;
   --color-transparent-grey: #57564454;
+  --color-secondary: #90a955;
 }
 
 h1,
@@ -36,4 +37,8 @@ body {
 .dialog-content {
   font-size: 14px !important;
   padding: 8px 16px 0px !important;
+}
+
+.MuiPaper-root {
+  background-color: var(--color-background) !important;
 }

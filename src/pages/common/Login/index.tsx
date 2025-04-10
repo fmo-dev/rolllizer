@@ -46,7 +46,7 @@ const Login: React.FC = () => {
   }
 
   return (
-    <Page id='login-page' title='Connexion'>
+    <Page id='login-page' title='Connexion' cantGoBack>
       <div className='form-container'>
         <form className='form'>
           <div className='login-back-button-container'>

@@ -22,7 +22,8 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
     if (!profile) {
       navigate('selectRole');
     }
-    else if (['/', ROUTES.login.path].includes(pathname)) {
+    else if (['/', `/${ROUTES.login.path}`].includes(pathname)) {
+      console.log('HOME')
       goHome(profile);
     }
     setIsAuthLoading(false);
@@ -65,10 +66,17 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
     } else throw new Error('Invalid OTP');
   }, [api, onLogin]);
 
+  const logout = useCallback(async () => {
+    await api.auth.signOut();
+    setUser(null);
+    setIsAuthLoading(true);
+    navigate('login');
+  }, [api, navigate]);
+
   useEffect(() => { checkSession() }, [checkSession])
 
   return (
-    <AuthenticationContext.Provider value={{ auth, sendOTP, user, isAuthLoading }}>
+    <AuthenticationContext.Provider value={{ auth, sendOTP, user, isAuthLoading, logout }}>
       {user && (
         <UserProvider user={user}>
           {children}
