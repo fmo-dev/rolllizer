@@ -23,7 +23,6 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
       navigate('selectRole');
     }
     else if (['/', `/${ROUTES.login.path}`].includes(pathname)) {
-      console.log('HOME')
       goHome(profile);
     }
     setIsAuthLoading(false);

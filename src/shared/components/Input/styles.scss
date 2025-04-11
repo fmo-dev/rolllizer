@@ -1,9 +1,9 @@
 .app-input {
-  border-color: var(--color-main);
-  background: var(--color-white);
+  border-color: var(--color-primary);
+  background: var(--color-background);
   padding: 4px 8px;
   font-size: 16px;
-  color: var(--color-text);
+  color: var(--color-on-background);
   outline: none !important;
   border-radius: 4px;
 }

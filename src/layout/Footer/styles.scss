@@ -1,14 +1,14 @@
 .footer {
-  background-color: var(--color-main) !important;
+  background-color: var(--color-surface) !important;
   & .navigation-icon {
     & svg {
-      fill: var(--color-main);
-      stroke: var(--color-background) !important;
+      fill: var(--color-surface);
+      stroke: var(--color-on-surface) !important;
       transform: scale(1.5);
     }
     &.is-current {
       & svg {
-        fill: var(--color-background) !important;
+        fill: var(--color-on-surface) !important;
       }
     }
   }
