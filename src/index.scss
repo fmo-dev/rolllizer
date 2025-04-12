@@ -10,13 +10,14 @@
   --color-accent-3: #4b4f50;
   --color-accent-4: #dbdcdd;
 
-  --color-primary: #4f46e5;
-  --color-secondary: #f59e0b;
-  --color-background: #f9fafb;
-  --color-surface: #ffffff;
-  --color-on-primary: #020202;
-  --color-on-background: #111827;
-  --color-on-surface: #374151;
+  --color-primary: #006d7c;
+  --color-on-primary: #dbdcdd;
+  --color-secondary: #374151;
+  --color-background: #dbf2e8;
+  --color-on-background: #000;
+  --color-surface: #2c9da5;
+  --color-on-surface: #ffffff;
+  --color-accent: #2c9da5;
 
   // --color-main: #056842;
   // --color-white: #f9f6c9;
@@ -36,6 +37,8 @@
   --mui-palette-success-main: var(--color-success) !important;
   --mui-palette-warning-main: var(--color-warning) !important;
   --mui-palette-text-main: var(--color-warning) !important;
+  --mui-palette-primary-mainChannel: default !important;
+  --mui-palette-primary-dark: var(--color-on-primary) !important;
 }
 
 h1,
@@ -50,6 +53,7 @@ p {
 
 body {
   margin: 0;
+  background-color: var(--color-primary);
 }
 
 .dialog-title {
@@ -63,5 +67,12 @@ body {
 }
 
 .MuiPaper-root {
-  background-color: var(--color-background) !important;
+  // background-color: var(--color-secondary) !important;
+}
+
+.MuiButton-containedPrimary {
+  background-color: var(--color-accent) !important;
+  padding: 8px 32px !important;
+  font-weight: bold !important;
+  border-radius: 32px !important;
 }

@@ -4,13 +4,13 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    background-color: var(--color-background);
+    background-color: var(--color-primary);
     height: 100%;
     &.with-footer {
-      height: calc(100vh - 56px); // 56px is the height of the footer
+      height: calc(100vh - 80px); // 56px is the height of the footer
     }
     &:not(.with-footer) {
-      padding-top: 56px;
+      // padding-top: 56px;
     }
     &-content {
       height: 100%;

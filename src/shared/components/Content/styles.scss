@@ -1,0 +1,16 @@
+.content {
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top-right-radius: 32px;
+  border-top-left-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  & h1 {
+    color: var(--color-primary);
+    align-self: center;
+    font-size: 20px;
+  }
+}

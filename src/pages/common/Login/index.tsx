@@ -9,6 +9,8 @@ import { OTPInput } from '../../../shared/components/Input/OTPInput';
 import './styles.scss'
 import { Page } from '../../../shared/components/Page';
 import { AppButton } from '../../../shared/components/Button';
+import { Content } from '../../../shared/components/Content';
+import logo from "../../../assets/logo.png";
 
 const Login: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(LoginStep.PHONE);
@@ -44,39 +46,44 @@ const Login: React.FC = () => {
         );
     }
   }
-
   return (
-    <Page id='login-page' title='Connexion' cantGoBack>
-      <div className='form-container'>
-        <form className='form'>
-          <div className='login-back-button-container'>
-            {currentStep === LoginStep.OTP && (
-              <AppButton className='login-back-button' onClick={() => setCurrentStep(LoginStep.PHONE)}>
-                <ArrowBackIcon /> Retour
-              </AppButton>
-            )}
-          </div>
-          {renderStep()}
-          <AppButton
-            type='submit'
-            variant='contained'
-            color='primary'
-            center
-            disabled={currentStep === LoginStep.OTP}
-            loading={isLoading}
-            onClick={() => asyncOperation(async () => {
-              try {
-                await auth(currentPhoneNumberRef.current);
-                setCurrentStep(LoginStep.OTP);
-              } catch (e) {
-                console.error(e);
-              }
-            })}
-          >
-            Valider
-          </AppButton>
-        </form>
-      </div>
+    <Page id='login-page' cantGoBack>
+      <img src={logo} alt='Logo' className='logo'
+        style={{ width: '200px' }}
+      />
+
+      <Content height={450} title="Login">
+        <div className='form-container'>
+          <form className='form'>
+            <div className='login-back-button-container'>
+              {currentStep === LoginStep.OTP && (
+                <AppButton className='login-back-button' onClick={() => setCurrentStep(LoginStep.PHONE)}>
+                  <ArrowBackIcon /> Retour
+                </AppButton>
+              )}
+            </div>
+            {renderStep()}
+            <AppButton
+              type='submit'
+              variant='contained'
+              color='primary'
+              center
+              disabled={currentStep === LoginStep.OTP}
+              loading={isLoading}
+              onClick={() => asyncOperation(async () => {
+                try {
+                  await auth(currentPhoneNumberRef.current);
+                  setCurrentStep(LoginStep.OTP);
+                } catch (e) {
+                  console.error(e);
+                }
+              })}
+            >
+              Valider
+            </AppButton>
+          </form>
+        </div>
+      </Content>
     </Page>
   );
 }

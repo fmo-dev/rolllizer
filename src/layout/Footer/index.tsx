@@ -1,5 +1,5 @@
 
-import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { useRouter } from '../../providers/router/hooks';
 import { useEffect, useState } from 'react';
@@ -21,9 +21,8 @@ export const Footer: React.FC = () => {
     }
   }, [currentValue, pathname]);
   return (
-    <Paper elevation={3}>
+    <div className="footer">
       <BottomNavigation
-        className="footer"
         onChange={(_, newValue) => {
           setCurrentValue(newValue);
           navigate(newValue);
@@ -39,6 +38,6 @@ export const Footer: React.FC = () => {
           />
         ))}
       </BottomNavigation>
-    </Paper>
+    </div>
   )
 }

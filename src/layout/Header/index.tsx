@@ -1,10 +1,11 @@
-import { AppBar } from "@mui/material";
 import "./styles.scss";
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  title?: string;
+}
+
+export const Header: React.FC<HeaderProps> = ({ title }) => {
   return (
-    <AppBar className="header">
-      <h1>Rollizer</h1>
-    </AppBar>
+    title
   )
 }

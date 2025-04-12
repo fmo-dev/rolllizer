@@ -1,14 +1,25 @@
 .footer {
-  background-color: var(--color-surface) !important;
-  & .navigation-icon {
-    & svg {
-      fill: var(--color-surface);
-      stroke: var(--color-on-surface) !important;
-      transform: scale(1.5);
-    }
-    &.is-current {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+  & > div {
+    height: 80%;
+    width: fit-content;
+    padding: 0 16px;
+    border-radius: 32px;
+    background-color: var(--color-surface) !important;
+    & .navigation-icon {
       & svg {
-        fill: var(--color-on-surface) !important;
+        fill: var(--color-surface);
+        stroke: var(--color-on-surface) !important;
+        transform: scale(1.5);
+      }
+      &.is-current {
+        & svg {
+          fill: var(--color-on-surface) !important;
+        }
       }
     }
   }
