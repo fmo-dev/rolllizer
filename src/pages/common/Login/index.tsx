@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CheckIcon from '@mui/icons-material/Check';
 
 import { LoginStep } from './types';
 import { useAuthentication } from '../../../providers/authentication/hooks';
@@ -46,8 +47,26 @@ const Login: React.FC = () => {
     }
   }
   return (
-    <Page id='login-page' cantGoBack withLogo>
-      <Content height={450} title="Connexion">
+    <Page
+      id='login-page'
+      cantGoBack
+      withLogo
+      title="Connexion"
+      footerAction={{
+        disabled: currentStep === LoginStep.OTP,
+        loading: isLoading,
+        icon: <CheckIcon />,
+        onClick: () => asyncOperation(async () => {
+          try {
+            await auth(currentPhoneNumberRef.current);
+            setCurrentStep(LoginStep.OTP);
+          } catch (e) {
+            console.error(e);
+          }
+        }),
+      }}
+    >
+      <Content height={300} title="Connexion">
         <div className='form-container'>
           <form className='form'>
             <div className='login-back-button-container'>
@@ -60,7 +79,7 @@ const Login: React.FC = () => {
               </div>
             </div>
             {renderStep()}
-            <AppButton
+            {/* <AppButton
               type='submit'
               variant='contained'
               color='primary'
@@ -77,7 +96,7 @@ const Login: React.FC = () => {
               })}
             >
               Valider
-            </AppButton>
+            </AppButton> */}
           </form>
         </div>
       </Content>

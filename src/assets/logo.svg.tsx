@@ -1,3 +1,4 @@
+import "./styles.scss";
 
 export const Logo: React.FC = () => (
   <svg className="logo" width="200px" height="116.21px" viewBox="0 0 876 509">

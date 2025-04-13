@@ -1,7 +1,8 @@
 import { createContext } from "react";
 
 interface HeaderContextState {
-  setTitle(title: string): void;
+  canGoBack: boolean;
+  setCanGoBack(value: boolean): void;
 }
 
 export const HeaderContext = createContext({} as HeaderContextState);

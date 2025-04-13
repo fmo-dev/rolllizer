@@ -4,18 +4,18 @@ import { Page } from "../../../shared/components/Page";
 import { useGroups } from "../../../providers/groups/hooks";
 import { useRouter } from "../../../providers/router/hooks";
 import { Loader } from "../../../shared/components/Loader";
-import { InputLabel, TextField } from "@mui/material";
+import { InputLabel, Paper, TextField } from "@mui/material";
 
 import _map from "lodash/map";
-
+import CheckIcon from '@mui/icons-material/Check';
 import "./styles.scss";
 import { ImageInput } from "../../../shared/components/Input/ImageInput";
 import { useAPI } from "../../../providers/api/hooks";
 import { useUser } from "../../../providers/user/hooks";
 import { PlayerInputs } from "./PlayerInputs";
 import { NoPlayerDialog } from "./NoPlayerDialog";
-import { ActionButton } from "../../../shared/components/Button/ActionButton";
 import { useRouteParams } from "../../../providers/route-params/hooks";
+import { Content } from "../../../shared/components/Content";
 
 export const GroupSettings: React.FC = () => {
   const api = useAPI();
@@ -100,38 +100,48 @@ export const GroupSettings: React.FC = () => {
     return <Loader />
   }
   return (
-    <Page id="group-settings-page" title={group ? "Gérer un groupe" : "Créer un groupe"}>
-      <form className='form' onSubmit={(event) => {
-        event.preventDefault();
-        onSubmit();
-      }}>
-        <div className="form-content">
-          <TextField
-            label="Nom du groupe"
-            required
-            className="name-field"
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-            onBlur={() => setHasNameBeenBlurred(true)}
-            error={hasNameBeenBlurred && !name.length}
-            helperText={hasNameBeenBlurred && !name.length ? 'Le nom du groupe est requis' : ''}
+    <Page
+      id="group-settings-page"
+      title={group ? "Gérer un groupe" : "Créer un groupe"}
+      footerAction={{
+        icon: <CheckIcon />,
+        onClick: onSubmit,
+        disabled: isFormDisabled,
+        loading: isSubmitLoading,
+      }}
+    >
+      <Content>
+        <Paper >
+          <form className='form' onSubmit={(event) => {
+            event.preventDefault();
+            onSubmit();
+          }}>
+            <div className="form-content">
+              <TextField
+                label="Nom du groupe"
+                required
+                className="name-field"
+                value={name}
+                onChange={({ target }) => setName(target.value)}
+                onBlur={() => setHasNameBeenBlurred(true)}
+                error={hasNameBeenBlurred && !name.length}
+                helperText={hasNameBeenBlurred && !name.length ? 'Le nom du groupe est requis' : ''}
+              />
+              <div className="image-field">
+                <InputLabel>Image du groupe</InputLabel>
+                <ImageInput value={image} onChange={setImage} />
+              </div>
+              <PlayerInputs value={players} onChange={setPlayers} />
+            </div>
+          </form>
+        </Paper>
+        {isWarningModalOpened && (
+          <NoPlayerDialog
+            onClose={() => setIWarningModalOpened(false)}
+            onConfirm={() => onSubmit(true)}
           />
-          <div className="image-field">
-            <InputLabel>Image du groupe</InputLabel>
-            <ImageInput value={image} onChange={setImage} />
-          </div>
-          <PlayerInputs value={players} onChange={setPlayers} />
-        </div>
-        <ActionButton loading={isSubmitLoading} className="submit-button" variant="contained" type="submit" disabled={isFormDisabled}>
-          Valider
-        </ActionButton>
-      </form>
-      {isWarningModalOpened && (
-        <NoPlayerDialog
-          onClose={() => setIWarningModalOpened(false)}
-          onConfirm={() => onSubmit(true)}
-        />
-      )}
+        )}
+      </Content>
     </Page>
   )
 }

@@ -20,6 +20,9 @@
         .login-back-button {
           display: flex;
           gap: 8px;
+          & .app-button {
+            padding: 0 !important;
+          }
         }
       }
       & > button {

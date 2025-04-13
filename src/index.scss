@@ -3,7 +3,7 @@
   width: 100vw;
   line-height: 1.5;
 
-  --header-size: 40px;
+  --header-size: 60px;
   --footer-size: 70px;
 
   --color-dominant: #f7971e;
@@ -56,6 +56,7 @@ p {
 
 body {
   margin: 0;
+  // background-color: var(--color-primary);
 }
 
 .dialog-title {

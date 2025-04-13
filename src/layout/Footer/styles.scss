@@ -15,26 +15,25 @@
       top: -0px;
       transform: translateX(-50%);
       border-bottom: 4px solid var(--color-primary);
-      // border-color: red;
       height: 80%;
       border-radius: 60%;
       justify-content: center;
-    }
-    &-icon {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      padding: 12px;
-      border-radius: 32px;
-      margin-top: auto;
-      background-color: var(--color-primary);
-      color: white;
-      display: flex;
-      & svg {
-        margin: auto;
-        // fill: var(--color-primary);
-        // stroke: var(--color-on-surface) !important;
-        // transform: scale(1.5);
+      & .app-button {
+        position: absolute;
+        min-width: 0px !important;
+        width: 48px !important;
+        height: 48px !important;
+        padding: 16px !important;
+        border-radius: 32px !important;
+        margin-top: auto;
+        background-color: var(--color-primary);
+        color: white;
+        display: flex;
+        bottom: 8px;
+        &:disabled {
+          color: white;
+          opacity: 0.7;
+        }
       }
     }
   }
@@ -106,6 +105,15 @@
       top: px;
       right: 50%;
       transform: rotate(30deg) translateX(-15px);
+    }
+  }
+  &.without-icons {
+    & .footer-actions,
+    .footer-bottom-bar {
+      display: none;
+    }
+    & .footer-main-button-container {
+      border-color: transparent;
     }
   }
 }

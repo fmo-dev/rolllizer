@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import "./styles.scss";
 import { useAuthentication } from "../../providers/authentication/hooks";
 import { Loader } from "../../shared/components/Loader";
-import { Footer } from "../Footer";
 import { cn } from "../../shared/utils";
 import { HeaderContextProvider } from "../../providers/header/provider";
 import { FooterContextProvider } from "../../providers/footer/provider";

@@ -1,13 +1,12 @@
 import { HTMLAttributes, useEffect } from "react";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import './styles.scss';
 import { cn } from "../../utils";
 import { Title } from "../Title";
-import { useRouter } from "../../../providers/router/hooks";
 import { Logo } from '../../../assets/logo.svg';
 import { useFooterContext } from "../../../providers/footer/hooks";
 import { FooterAction } from "../../../providers/footer/type";
+import { useHeaderContext } from "../../../providers/header/hooks";
 
 interface PageProps extends HTMLAttributes<HTMLDivElement> {
   cantGoBack?: boolean;
@@ -17,8 +16,12 @@ interface PageProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Page: React.FC<PageProps> = ({ children, title, cantGoBack, withLogo,
   footerAction, ...props }) => {
-  const router = useRouter();
   const { setFooterAction } = useFooterContext();
+  const { setCanGoBack } = useHeaderContext();
+
+  useEffect(() => {
+    setCanGoBack(!cantGoBack);
+  }, [cantGoBack, setCanGoBack])
 
   useEffect(() => {
     setFooterAction(footerAction);
@@ -27,9 +30,7 @@ export const Page: React.FC<PageProps> = ({ children, title, cantGoBack, withLog
   return (
     <div {...props} className={cn(props.className, 'page')}>
       <div className="page-header">
-        <div className="back-button-container">
-          {!cantGoBack && <ArrowBackIcon className="back-button" onClick={router.goBack} />}
-        </div>
+
         {withLogo && (
           <div className="logo-container">
             <Logo />

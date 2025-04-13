@@ -1,17 +1,33 @@
 .app-header {
-  margin: 0;
-  // background-color: var(--color-primary) !important;
+  z-index: 2;
+  position: fixed;
+  background-color: transparent;
   width: 100%;
   height: var(--header-size);
   padding: 0 16px;
   box-sizing: border-box;
-  box-shadow: unset;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  background-color: var(--color-primary);
   align-items: center;
-  & h1 {
-    margin: 0;
-    font-size: 20px;
-    color: var(--color-on-surface);
+  & .back-button {
+    color: var(--color-background);
+  }
+  &-icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    &-icon {
+      width: 32px;
+      height: 32px;
+      padding: 8px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background-color: var(--color-background);
+      color: var(--color-secondary);
+    }
   }
 }

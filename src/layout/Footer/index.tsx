@@ -1,5 +1,4 @@
 
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { useRouter } from '../../providers/router/hooks';
 import { useEffect, useState } from 'react';
@@ -9,8 +8,11 @@ import { cn } from '../../shared/utils';
 import "./styles.scss";
 import _find from 'lodash/find';
 import { useFooterContext } from '../../providers/footer/hooks';
+import { AppButton } from '../../shared/components/Button';
+import { useAuthentication } from '../../providers/authentication/hooks';
 
 export const Footer: React.FC = () => {
+  const { user } = useAuthentication();
   const { pathname } = useLocation();
   const { navigate } = useRouter();
   const { footerAction } = useFooterContext();
@@ -42,13 +44,18 @@ export const Footer: React.FC = () => {
   }
 
   return (
-    <div className="footer">
+    <div className={cn("footer", { "without-icons": !user })}>
       <div className="footer-main-button">
         <div className="footer-main-button-container">
           {footerAction && (
-            <div className="footer-main-button-icon" onClick={footerAction.onClick}>
+            <AppButton
+              size="small"
+              disabled={footerAction.disabled}
+              onClick={footerAction.onClick}
+              loading={footerAction.loading}
+            >
               {footerAction.icon}
-            </div>
+            </AppButton>
           )}
 
         </div>
