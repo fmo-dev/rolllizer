@@ -10,7 +10,6 @@ import './styles.scss'
 import { Page } from '../../../shared/components/Page';
 import { AppButton } from '../../../shared/components/Button';
 import { Content } from '../../../shared/components/Content';
-import logo from "../../../assets/logo.png";
 
 const Login: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(LoginStep.PHONE);
@@ -47,20 +46,18 @@ const Login: React.FC = () => {
     }
   }
   return (
-    <Page id='login-page' cantGoBack>
-      <img src={logo} alt='Logo' className='logo'
-        style={{ width: '200px' }}
-      />
-
-      <Content height={450} title="Login">
+    <Page id='login-page' cantGoBack withLogo>
+      <Content height={450} title="Connexion">
         <div className='form-container'>
           <form className='form'>
             <div className='login-back-button-container'>
-              {currentStep === LoginStep.OTP && (
-                <AppButton className='login-back-button' onClick={() => setCurrentStep(LoginStep.PHONE)}>
-                  <ArrowBackIcon /> Retour
-                </AppButton>
-              )}
+              <div className='login-back-button'>
+                {currentStep === LoginStep.OTP && (
+                  <AppButton onClick={() => setCurrentStep(LoginStep.PHONE)}>
+                    <ArrowBackIcon /> Retour
+                  </AppButton>
+                )}
+              </div>
             </div>
             {renderStep()}
             <AppButton

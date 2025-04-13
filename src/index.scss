@@ -71,7 +71,9 @@ body {
 }
 
 .MuiButton-containedPrimary {
-  background-color: var(--color-accent) !important;
+  &:not(.Mui-disabled) {
+    background-color: var(--color-accent) !important;
+  }
   padding: 8px 32px !important;
   font-weight: bold !important;
   border-radius: 32px !important;

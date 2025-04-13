@@ -15,11 +15,16 @@
       flex-direction: column;
       gap: 24px;
       .login-back-button-container {
+        height: 38px;
         align-self: flex-start;
         .login-back-button {
           display: flex;
           gap: 8px;
         }
+      }
+      & > button {
+        position: fixed;
+        bottom: 15px;
       }
     }
   }
