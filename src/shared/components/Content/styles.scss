@@ -1,11 +1,9 @@
 .content {
-  background-color: #fff;
-  position: fixed;
   bottom: 0;
+  margin-top: -120px;
   left: 0;
   right: 0;
-  border-top-right-radius: 32px;
-  border-top-left-radius: 32px;
+  padding: 32px 16px 0px;
   display: flex;
   flex-direction: column;
   & h1 {

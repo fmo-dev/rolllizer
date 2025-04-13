@@ -7,7 +7,7 @@ export const CreateGroupButton: React.FC<AppButtonProps> = (props) => {
   return (
     <AppButton
       id="create-group-button"
-      variant="outlined"
+      variant="contained"
       onClick={() => navigate('createGroup')}
       {...props}
     >

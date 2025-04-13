@@ -1,10 +1,14 @@
-.header {
+.app-header {
   margin: 0;
-  background-color: var(--color-primary) !important;
-  position: fixed;
+  // background-color: var(--color-primary) !important;
   width: 100%;
-  padding: 8px 16px;
+  height: var(--header-size);
+  padding: 0 16px;
+  box-sizing: border-box;
   box-shadow: unset;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   & h1 {
     margin: 0;
     font-size: 20px;

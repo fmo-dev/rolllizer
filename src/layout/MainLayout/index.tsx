@@ -6,6 +6,7 @@ import { Loader } from "../../shared/components/Loader";
 import { Footer } from "../Footer";
 import { cn } from "../../shared/utils";
 import { HeaderContextProvider } from "../../providers/header/provider";
+import { FooterContextProvider } from "../../providers/footer/provider";
 
 export const MainLayout: React.FC<PropsWithChildren> = () => {
   const { isAuthLoading, user } = useAuthentication();
@@ -13,13 +14,14 @@ export const MainLayout: React.FC<PropsWithChildren> = () => {
   return (
     <div className="main-layout">
       <HeaderContextProvider>
-        <div className={cn("main-layout-body", { "with-footer": !!user })}>
-          <div className="main-layout-body-content">
-            {isAuthLoading && <Loader />}
-            {!isAuthLoading && <Outlet />}
+        <FooterContextProvider>
+          <div className={cn("main-layout-body", { "with-footer": !!user })}>
+            <div className="main-layout-body-content">
+              {isAuthLoading && <Loader />}
+              {!isAuthLoading && <Outlet />}
+            </div>
           </div>
-        </div>
-        {user && <Footer />}
+        </FooterContextProvider>
       </HeaderContextProvider >
     </div >
   )

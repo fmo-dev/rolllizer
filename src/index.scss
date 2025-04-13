@@ -3,6 +3,9 @@
   width: 100vw;
   line-height: 1.5;
 
+  --header-size: 40px;
+  --footer-size: 70px;
+
   --color-dominant: #f7971e;
   --color-accent-4: #d2d1d3;
   --color-accent-1: #1b1b1b;
@@ -26,7 +29,7 @@
   --color-success: #7fb069;
   --color-warning: #e6aa68;
   --color-text: var(--color-on-background);
-  // --color-grey: #666666;
+  --color-grey: #666666;
   --color-transparent-grey: #57564454;
   // --color-secondary: #90a955;
 
@@ -53,7 +56,6 @@ p {
 
 body {
   margin: 0;
-  background-color: var(--color-primary);
 }
 
 .dialog-title {
@@ -68,12 +70,17 @@ body {
 
 .MuiPaper-root {
   // background-color: var(--color-secondary) !important;
+  border-radius: 32px !important;
+  border: none;
+  box-shadow: 0px 0px 5px 0px var(--color-grey) !important;
 }
 
-.MuiButton-containedPrimary {
-  &:not(.Mui-disabled) {
-    background-color: var(--color-accent) !important;
-  }
+.MuiButton-root {
+  // .MuiButton-containedPrimary {
+  //   &:not(.Mui-disabled) {
+  //     background-color: var(--color-accent) !important;
+  //   }
+  // }
   padding: 8px 32px !important;
   font-weight: bold !important;
   border-radius: 32px !important;

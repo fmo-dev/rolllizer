@@ -1,21 +1,15 @@
-import PersonIcon from '@mui/icons-material/Person';
-
-import { BottomLink } from "./types";
 import DragonIcon from '../../assets/dragon.svg';
 import SwordIcon from '../../assets/sword.svg';
+import { BottomLink } from './types';
 
-export const BOTTOM_LINKS: BottomLink[] = [
-  {
+export const BOTTOM_LINKS: Record<"left" | "right", BottomLink> = {
+  left: {
     value: 'masterHome',
     Icon: DragonIcon,
 
   },
-  {
+  right: {
     value: 'playerHome',
     Icon: SwordIcon,
   },
-  {
-    value: 'profile',
-    Icon: PersonIcon,
-  }
-]
+}

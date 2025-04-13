@@ -13,9 +13,7 @@ export const RouterContextProvider: React.FC<PropsWithChildren> = ({ children })
     params?.forEach((param) => path = path.replace(/:[0-9]/, `${param}`));
     _navigate(path);
   }, [_navigate]);
-
   const goBack = useCallback(() => _navigate(-1), [_navigate]);
-
   const goHome = useCallback((profile?: UserProfile) => {
     switch (profile) {
       case 'master':

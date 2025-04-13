@@ -2,34 +2,15 @@
   & .border {
     fill: var(--color-primary);
   }
-  & .letter {
+  & .secondary {
+    fill: var(--color-secondary);
+  }
+  & .filled {
     fill: var(--color-background);
   }
-  & .sword {
-    &-handle {
-      fill: var(--color-secondary);
-    }
-    &-blade {
-      fill: var(--color-secondary);
-    }
-  }
-  .calendar {
-    &-inside {
-      fill: var(--color-background);
-    }
-    &-outside {
-      fill: var(--color-secondary);
-    }
-  }
   & .dice {
-    &-border {
-      fill: var(--color-secondary);
-    }
     &-inside {
       fill: var(--color-surface);
-    }
-    &-letter {
-      fill: var(--color-background);
     }
   }
 }
