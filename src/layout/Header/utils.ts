@@ -16,7 +16,8 @@ export const getHeaderStyle = (scrollPercent: number) => {
 }
 
 export const getTitleStyle = (scrollPercent: number) => {
-  return {
-    top: `${-50 + scrollPercent * 100}%`,
-  };
+  if (scrollPercent > 0.6)
+    return {
+      top: `${-50 + (scrollPercent * 100 - 60) * 2.5}%`,
+    };
 }
