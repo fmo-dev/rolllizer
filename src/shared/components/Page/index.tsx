@@ -17,11 +17,15 @@ interface PageProps extends HTMLAttributes<HTMLDivElement> {
 export const Page: React.FC<PageProps> = ({ children, title, cantGoBack, withLogo,
   footerAction, ...props }) => {
   const { setFooterAction } = useFooterContext();
-  const { setCanGoBack } = useHeaderContext();
+  const { setCanGoBack, setTitle } = useHeaderContext();
 
   useEffect(() => {
     setCanGoBack(!cantGoBack);
   }, [cantGoBack, setCanGoBack])
+
+  useEffect(() => {
+    setTitle(title);
+  }, [title, setTitle])
 
   useEffect(() => {
     setFooterAction(footerAction);

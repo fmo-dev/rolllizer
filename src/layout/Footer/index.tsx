@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
   }
 
   return (
-    <div className={cn("footer", { "without-icons": !user })}>
+    <div className="footer">
       <div className="footer-main-button">
         <div className="footer-main-button-container">
           {footerAction && (
@@ -53,6 +53,7 @@ export const Footer: React.FC = () => {
               disabled={footerAction.disabled}
               onClick={footerAction.onClick}
               loading={footerAction.loading}
+              type="submit"
             >
               {footerAction.icon}
             </AppButton>
@@ -60,11 +61,13 @@ export const Footer: React.FC = () => {
 
         </div>
       </div>
-      <div className='footer-actions'>
-        {getIcon('left')}
-        {getIcon('right')}
-      </div>
-      <div className='footer-bottom-bar' />
+      {!!user && (
+        <div className='footer-actions'>
+          {getIcon('left')}
+          {getIcon('right')}
+        </div>
+      )}
+      {/* <div className='footer-bottom-bar' /> */}
     </div>
   )
 }

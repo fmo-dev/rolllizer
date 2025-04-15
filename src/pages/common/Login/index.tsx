@@ -66,7 +66,7 @@ const Login: React.FC = () => {
         }),
       }}
     >
-      <Content height={300} title="Connexion">
+      <Content height={300}>
         <div className='form-container'>
           <form className='form'>
             <div className='login-back-button-container'>
@@ -79,24 +79,6 @@ const Login: React.FC = () => {
               </div>
             </div>
             {renderStep()}
-            {/* <AppButton
-              type='submit'
-              variant='contained'
-              color='primary'
-              center
-              disabled={currentStep === LoginStep.OTP}
-              loading={isLoading}
-              onClick={() => asyncOperation(async () => {
-                try {
-                  await auth(currentPhoneNumberRef.current);
-                  setCurrentStep(LoginStep.OTP);
-                } catch (e) {
-                  console.error(e);
-                }
-              })}
-            >
-              Valider
-            </AppButton> */}
           </form>
         </div>
       </Content>

@@ -14,16 +14,11 @@
       display: flex;
       top: -0px;
       transform: translateX(-50%);
-      border-bottom: 4px solid var(--color-primary);
-      height: 80%;
-      border-radius: 60%;
       justify-content: center;
       & .app-button {
         position: absolute;
         min-width: 0px !important;
-        width: 48px !important;
         height: 48px !important;
-        padding: 16px !important;
         border-radius: 32px !important;
         margin-top: auto;
         background-color: var(--color-primary);
@@ -43,8 +38,8 @@
     align-items: flex-end;
     height: 100%;
     &-action {
-      width: 120px;
-      height: 100%;
+      width: 90px;
+      height: 70px;
       box-sizing: border-box;
       z-index: 1;
       background-color: var(--color-primary);
@@ -52,26 +47,24 @@
       justify-content: flex-start;
       align-items: center;
       padding: 0 32px;
-      border-radius: 16px 16px 0 0;
+      border-radius: 0px 0px 0 0;
       &:first-of-type {
-        border-top-right-radius: 70%;
-        // padding-right: 8;
+        border-top-right-radius: 48px;
         padding-left: 16px;
       }
       &:last-of-type {
-        border-top-left-radius: 70%;
-        // padding-left: 64px;
+        border-top-left-radius: 48px;
         padding-right: 16px;
       }
       &-icon {
         display: flex;
-        height: 80%;
+        height: 60px;
         width: 100%;
         & svg {
           margin: auto;
           fill: var(--color-primary);
           stroke: var(--color-on-surface) !important;
-          transform: scale(1.5);
+          transform: scale(1.4);
         }
         &.is-current {
           & svg {
@@ -79,41 +72,6 @@
           }
         }
       }
-    }
-  }
-  &-bottom-bar {
-    height: 20%;
-    transform: translateY(-100%);
-    background-color: var(--color-primary);
-    position: relative;
-    &:before {
-      content: " ";
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background-color: var(--color-primary);
-      top: px;
-      left: 50%;
-      transform: rotate(-30deg) translateX(15px);
-    }
-    &:after {
-      content: " ";
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background-color: var(--color-primary);
-      top: px;
-      right: 50%;
-      transform: rotate(30deg) translateX(-15px);
-    }
-  }
-  &.without-icons {
-    & .footer-actions,
-    .footer-bottom-bar {
-      display: none;
-    }
-    & .footer-main-button-container {
-      border-color: transparent;
     }
   }
 }

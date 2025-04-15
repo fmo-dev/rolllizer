@@ -1,15 +1,22 @@
 .app-header {
-  z-index: 2;
+  z-index: 999;
   position: fixed;
-  background-color: transparent;
   width: 100%;
   height: var(--header-size);
   padding: 0 16px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  background-color: var(--color-primary);
   align-items: center;
+  & .header-bar {
+    z-index: -1;
+    left: 0;
+    position: fixed;
+    height: var(--header-size);
+    width: 100%;
+    opacity: 0.1;
+    background-color: var(--color-primary);
+  }
   & .back-button {
     color: var(--color-background);
   }
@@ -29,5 +36,14 @@
       background-color: var(--color-background);
       color: var(--color-secondary);
     }
+  }
+  &-title {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-align: center;
   }
 }
