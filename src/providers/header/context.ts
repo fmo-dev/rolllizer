@@ -1,10 +1,10 @@
-import { createContext } from "react";
+import { createContext, ReactNode } from "react";
 
 interface HeaderContextState {
   canGoBack: boolean;
   setCanGoBack(value: boolean): void;
-  title: string | undefined;
-  setTitle(value?: string): void;
+  title: ReactNode | undefined;
+  setTitle(value?: ReactNode): void;
 }
 
 export const HeaderContext = createContext({} as HeaderContextState);

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { GroupPlayer, GroupType } from "../../../providers/groups/types";
 import { Page } from "../../../shared/components/Page";
 import { useGroups } from "../../../providers/groups/hooks";
 import { useRouter } from "../../../providers/router/hooks";
 import { Loader } from "../../../shared/components/Loader";
 import { InputLabel, Paper, TextField } from "@mui/material";
-
+import EditIcon from '@mui/icons-material/Edit';
 import _map from "lodash/map";
 import CheckIcon from '@mui/icons-material/Check';
 import "./styles.scss";
@@ -96,13 +96,25 @@ export const GroupSettings: React.FC = () => {
 
   const isFormDisabled = !name.length || isLoading;
 
+  const title = useMemo(() => {
+    if (!group) {
+      return "Créer un groupe";
+    }
+    return (
+      <div className="group-title">
+        <span>{group.name}</span>
+        <EditIcon />
+      </div>
+    )
+  }, [group])
+
   if (isLoading) {
     return <Loader />
   }
   return (
     <Page
       id="group-settings-page"
-      title={group ? "Gérer un groupe" : "Créer un groupe"}
+      title={title}
       footerAction={{
         icon: <CheckIcon />,
         onClick: onSubmit,
@@ -117,16 +129,18 @@ export const GroupSettings: React.FC = () => {
             onSubmit();
           }}>
             <div className="form-content">
-              <TextField
-                label="Nom du groupe"
-                required
-                className="name-field"
-                value={name}
-                onChange={({ target }) => setName(target.value)}
-                onBlur={() => setHasNameBeenBlurred(true)}
-                error={hasNameBeenBlurred && !name.length}
-                helperText={hasNameBeenBlurred && !name.length ? 'Le nom du groupe est requis' : ''}
-              />
+              {!group && (
+                <TextField
+                  label="Nom du groupe"
+                  required
+                  className="name-field"
+                  value={name}
+                  onChange={({ target }) => setName(target.value)}
+                  onBlur={() => setHasNameBeenBlurred(true)}
+                  error={hasNameBeenBlurred && !name.length}
+                  helperText={hasNameBeenBlurred && !name.length ? 'Le nom du groupe est requis' : ''}
+                />
+              )}
               <div className="image-field">
                 <InputLabel>Image du groupe</InputLabel>
                 <ImageInput value={image} onChange={setImage} />

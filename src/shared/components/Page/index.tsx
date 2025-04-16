@@ -1,4 +1,4 @@
-import { HTMLAttributes, useEffect } from "react";
+import { HTMLAttributes, ReactNode, useEffect } from "react";
 
 import './styles.scss';
 import { cn } from "../../utils";
@@ -8,10 +8,11 @@ import { useFooterContext } from "../../../providers/footer/hooks";
 import { FooterAction } from "../../../providers/footer/type";
 import { useHeaderContext } from "../../../providers/header/hooks";
 
-interface PageProps extends HTMLAttributes<HTMLDivElement> {
+interface PageProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   cantGoBack?: boolean;
   withLogo?: boolean;
   footerAction?: FooterAction;
+  title: ReactNode;
 }
 
 export const Page: React.FC<PageProps> = ({ children, title, cantGoBack, withLogo,

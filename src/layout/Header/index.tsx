@@ -5,7 +5,7 @@ import "./styles.scss";
 import { useRouter } from '../../providers/router/hooks';
 import { useHeaderContext } from '../../providers/header/hooks';
 import { useAuthentication } from '../../providers/authentication/hooks';
-import { CSSProperties, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '../../shared/utils';
 import { getBarStyle, getHeaderStyle, getTitleStyle } from './utils';
 
@@ -17,9 +17,9 @@ export const Header: React.FC<HeaderProps> = () => {
   const { navigate, goBack } = useRouter();
   const { canGoBack, title } = useHeaderContext();
   const { user } = useAuthentication();
-  const [barStyle, setBarStyle] = useState<CSSProperties>({});
-  const [headerStyle, setHeaderStyle] = useState<CSSProperties>({});
-  const [titleStyle, setTitleStyle] = useState<CSSProperties>({});
+  const [barStyle, setBarStyle] = useState(getBarStyle(0));
+  const [headerStyle, setHeaderStyle] = useState(getHeaderStyle(0));
+  const [titleStyle, setTitleStyle] = useState(getTitleStyle(0));
 
   const onProfileClick = () => {
     navigate('profile');

@@ -10,7 +10,6 @@ import { OTPInput } from '../../../shared/components/Input/OTPInput';
 import './styles.scss'
 import { Page } from '../../../shared/components/Page';
 import { AppButton } from '../../../shared/components/Button';
-import { Content } from '../../../shared/components/Content';
 
 const Login: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(LoginStep.PHONE);
@@ -66,22 +65,20 @@ const Login: React.FC = () => {
         }),
       }}
     >
-      <Content height={300}>
-        <div className='form-container'>
-          <form className='form'>
-            <div className='login-back-button-container'>
-              <div className='login-back-button'>
-                {currentStep === LoginStep.OTP && (
-                  <AppButton onClick={() => setCurrentStep(LoginStep.PHONE)}>
-                    <ArrowBackIcon /> Retour
-                  </AppButton>
-                )}
-              </div>
+      <div className='form-container'>
+        <form className='form'>
+          <div className='login-back-button-container'>
+            <div className='login-back-button'>
+              {currentStep === LoginStep.OTP && (
+                <AppButton onClick={() => setCurrentStep(LoginStep.PHONE)}>
+                  <ArrowBackIcon /> Retour
+                </AppButton>
+              )}
             </div>
-            {renderStep()}
-          </form>
-        </div>
-      </Content>
+          </div>
+          {renderStep()}
+        </form>
+      </div>
     </Page>
   );
 }
