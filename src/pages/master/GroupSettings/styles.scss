@@ -19,21 +19,15 @@
       & .name-field {
         height: 80px;
       }
+      & label {
+        color: var(--color-on-background);
+      }
       & .image-field {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-bottom: 20px;
-        & label {
-          color: var(--color-on-background);
-        }
       }
     }
-  }
-
-  & .group-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
 }

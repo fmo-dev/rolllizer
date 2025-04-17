@@ -46,8 +46,8 @@ export const Footer: React.FC = () => {
   return (
     <div className="footer">
       <div className="footer-main-button">
-        <div className="footer-main-button-container">
-          {footerAction && (
+        {footerAction && (
+          <div className="footer-main-button-container">
             <AppButton
               size="small"
               disabled={footerAction.disabled}
@@ -57,9 +57,9 @@ export const Footer: React.FC = () => {
             >
               {footerAction.icon}
             </AppButton>
-          )}
 
-        </div>
+          </div>
+        )}
       </div>
       {!!user && (
         <div className='footer-actions'>

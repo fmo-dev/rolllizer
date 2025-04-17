@@ -10,9 +10,11 @@ export const getBarStyle = (scrollPercent: number) => {
 
 export const getHeaderStyle = (scrollPercent: number) => {
   const blur = scrollPercent * 10;
-  return {
-    boxShadow: `0 0 ${blur}px 0px var(--color-grey)`,
-  };
+  if (scrollPercent > 0.6) {
+    return {
+      boxShadow: `0 0 ${blur}px 0px var(--color-grey)`,
+    };
+  }
 }
 
 export const getTitleStyle = (scrollPercent: number) => {

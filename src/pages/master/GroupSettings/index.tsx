@@ -5,7 +5,6 @@ import { useGroups } from "../../../providers/groups/hooks";
 import { useRouter } from "../../../providers/router/hooks";
 import { Loader } from "../../../shared/components/Loader";
 import { InputLabel, Paper, TextField } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
 import _map from "lodash/map";
 import CheckIcon from '@mui/icons-material/Check';
 import "./styles.scss";
@@ -16,6 +15,7 @@ import { PlayerInputs } from "./PlayerInputs";
 import { NoPlayerDialog } from "./NoPlayerDialog";
 import { useRouteParams } from "../../../providers/route-params/hooks";
 import { Content } from "../../../shared/components/Content";
+import { GroupName } from "./GroupName";
 
 export const GroupSettings: React.FC = () => {
   const api = useAPI();
@@ -100,13 +100,8 @@ export const GroupSettings: React.FC = () => {
     if (!group) {
       return "Créer un groupe";
     }
-    return (
-      <div className="group-title">
-        <span>{group.name}</span>
-        <EditIcon />
-      </div>
-    )
-  }, [group])
+    return <GroupName groupName={name} onChange={setName} />
+  }, [group, name, setName])
 
   if (isLoading) {
     return <Loader />

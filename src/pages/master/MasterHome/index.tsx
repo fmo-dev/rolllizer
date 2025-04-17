@@ -34,7 +34,7 @@ export const MasterHome: React.FC = () => {
         onClick: () => navigate('createGroup'),
       }}
     >
-      <Content height={450}>
+      <Content>
         <div className="group-list">
           {groups.asOwner?.map((group) => <Group key={group.id} group={group} />)}
         </div>
