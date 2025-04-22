@@ -29,7 +29,6 @@ export const Header: React.FC<HeaderProps> = () => {
     const abortController = new AbortController();
     document.addEventListener('scroll', () => {
       const scrollPercent = Math.min(document.documentElement.scrollTop / 60, 1);
-      console.log(scrollPercent)
       setBarStyle(getBarStyle(scrollPercent));
       setHeaderStyle(getHeaderStyle(scrollPercent));
       setTitleStyle(getTitleStyle(scrollPercent));

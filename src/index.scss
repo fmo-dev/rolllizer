@@ -4,7 +4,7 @@
   line-height: 1.5;
 
   --header-size: 60px;
-  --footer-size: 70px;
+  --footer-size: 50px;
 
   --color-dominant: #f7971e;
   --color-accent-4: #d2d1d3;
@@ -42,6 +42,7 @@
   --mui-palette-text-main: var(--color-warning) !important;
   --mui-palette-primary-mainChannel: default !important;
   --mui-palette-primary-dark: var(--color-on-primary) !important;
+  --mui-palette-action-disabled: var(--color-accent-4) !important;
 }
 
 h1,

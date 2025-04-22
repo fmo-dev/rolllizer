@@ -20,13 +20,15 @@
   }
   .page-header {
     width: calc(100% - 32px);
-    min-height: 170px;
+    min-height: 40px;
     flex-direction: column;
     align-items: center;
     justify-self: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
     background-color: var(--color-primary);
     border-radius: 0 0 32px 32px;
-    padding: var(--header-size) 16px 16px;
+    padding: var(--header-size) 16px 32px;
     & .title-container {
       display: flex;
       & h1 {

@@ -3,7 +3,7 @@ import { FooterAction } from "./type";
 
 interface FooterContextState {
   footerAction?: FooterAction;
-  setFooterAction(footerAction?: FooterAction): void;
+  setFooterAction: React.Dispatch<React.SetStateAction<FooterAction | undefined>>;
 }
 
 export const FooterContext = createContext({} as FooterContextState);
