@@ -1,17 +1,15 @@
-.group-name-container {
-  & .group-name {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    & svg {
-      margin-bottom: 5px;
-    }
+.group-name-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  & svg {
+    margin-bottom: 5px;
   }
+}
 
-  & .group-name-editing {
-    & * {
-      color: var(--color-background);
-      border-color: var(--color-background) !important;
-    }
+.group-name-editing {
+  & * {
+    color: var(--color-background) !important;
+    border-color: var(--color-background) !important;
   }
 }

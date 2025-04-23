@@ -10,6 +10,7 @@ export interface GroupType {
   name: string;
   owner_id: number;
   image_url: string;
+  invitation_code: string;
   player: GroupPlayer[];
 }
 

@@ -45,8 +45,15 @@
     color: white;
     font-weight: bold;
     text-align: center;
+    width: calc(100% - 124px);
     & svg {
       display: none;
+    }
+    & > div {
+      height: var(--header-size);
+      padding: 4px 0;
+      box-sizing: border-box;
+      line-height: 20px;
     }
   }
 }
