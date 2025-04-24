@@ -1,0 +1,21 @@
+.invitation-link-code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &-value {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    &-char {
+      display: inline-block;
+      text-align: center;
+      width: 32px;
+      font-weight: 600;
+      height: 32px;
+      background-color: var(--color-accent-4);
+      line-height: 32px;
+    }
+  }
+}

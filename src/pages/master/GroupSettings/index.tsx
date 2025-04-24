@@ -4,7 +4,7 @@ import { Page } from "../../../shared/components/Page";
 import { useGroups } from "../../../providers/groups/hooks";
 import { useRouter } from "../../../providers/router/hooks";
 import { Loader } from "../../../shared/components/Loader";
-import { InputLabel, Paper, Snackbar, TextField } from "@mui/material";
+import { InputLabel, Paper, TextField } from "@mui/material";
 import _map from "lodash/map";
 import CheckIcon from '@mui/icons-material/Check';
 import "./styles.scss";
@@ -17,6 +17,7 @@ import { useRouteParams } from "../../../providers/route-params/hooks";
 import { Content } from "../../../shared/components/Content";
 import { GroupName } from "./GroupName";
 import { ExistingGroupInfo } from "./ExistingGroupInfo";
+import { useToastContext } from "../../../providers/toast/hooks";
 
 export const GroupSettings: React.FC = () => {
   const api = useAPI();
@@ -24,7 +25,6 @@ export const GroupSettings: React.FC = () => {
   const { navigate } = useRouter();
   const [groupId] = useRouteParams();
   const { groups, refetchGroups } = useGroups();
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const [group, setGroup] = useState<GroupType | null>(null);
   const [name, setName] = useState<string>('');
   const [players, setPlayers] = useState<GroupPlayer[]>([]);
@@ -32,6 +32,7 @@ export const GroupSettings: React.FC = () => {
   const [image, setImage] = useState<File | string | null>(null);
   const [isWarningModalOpened, setIWarningModalOpened] = useState(false);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+  const { addToast } = useToastContext();
 
   useEffect(() => {
     if (groupId) {
@@ -95,7 +96,7 @@ export const GroupSettings: React.FC = () => {
       if (!groupId) {
         navigate('editGroup', newGroupId);
       }
-      setIsSnackbarOpen(true);
+      addToast(groupId ? "Groupe mis à jour" : "Groupe créé");
     }
   }
 
@@ -157,13 +158,6 @@ export const GroupSettings: React.FC = () => {
           />
         )}
       </Content>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={isSnackbarOpen}
-        onClose={() => setIsSnackbarOpen(false)}
-        autoHideDuration={3000}
-        message={groupId ? "Groupe mis à jour" : "Groupe créé"}
-      />
     </Page>
   )
 }

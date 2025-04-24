@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = () => {
     };
   }, [])
 
-  if (!user) {
+  if (!user?.profile) {
     return null;
   }
   return (

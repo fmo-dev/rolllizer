@@ -19,11 +19,9 @@ export const Footer: React.FC = () => {
   const [currentValue, setCurrentValue] = useState<keyof typeof ROUTES>();
 
   useEffect(() => {
-    if (!currentValue) {
-      const mainRoute = pathname.split('/')[1];
-      const currentLink = _find(BOTTOM_LINKS, ({ value }) => ROUTES[value]?.path.split('/')[0] === mainRoute);
-      setCurrentValue(currentLink?.value);
-    }
+    const mainRoute = pathname.split('/')[1];
+    const currentLink = _find(BOTTOM_LINKS, ({ value }) => ROUTES[value]?.path.split('/')[0] === mainRoute);
+    setCurrentValue(currentLink?.value);
   }, [currentValue, pathname]);
 
   const getIcon = (position: keyof typeof BOTTOM_LINKS) => {
@@ -43,6 +41,9 @@ export const Footer: React.FC = () => {
     )
   }
 
+  if (!user?.profile && !footerAction) {
+    return null;
+  }
   return (
     <div className="footer">
       <div className="footer-main-button">
@@ -61,7 +62,7 @@ export const Footer: React.FC = () => {
           </div>
         )}
       </div>
-      {!!user && (
+      {!!user?.profile && (
         <div className='footer-actions'>
           {getIcon('left')}
           {getIcon('right')}

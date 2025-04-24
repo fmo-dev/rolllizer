@@ -8,15 +8,18 @@ import { InfoText } from '../../../shared/components/InfoText';
 import { Page } from '../../../shared/components/Page';
 
 import './styles.scss';
+import { useRouter } from '../../../providers/router/hooks';
 
 export const SelectRole: React.FC = () => {
   const { updateUser } = useUser();
   const [isLoading, setIsLoading] = useState<UserProfile>();
+  const { goHome } = useRouter();
 
   const onRoleSelect = async (profile: UserProfile) => {
     setIsLoading(profile);
     try {
       await updateUser({ profile });
+      goHome(profile);
     }
     finally {
       setIsLoading(undefined);
@@ -38,7 +41,12 @@ export const SelectRole: React.FC = () => {
   )
 
   return (
-    <Page id='select-role-page' title='Première connexion'>
+    <Page
+      id='select-role-page'
+      title='Première connexion'
+      cantGoBack
+      withLogo
+    >
       <div className='content'>
         <InfoText title='Sélectionne ton rôle' variant='info'>
           Tu pourras alterner entre les deux à tout moment.
