@@ -1,19 +1,12 @@
-.button-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
-  &.no-group {
-    margin: auto;
-    transform: translateY(-50%);
+#master-home-page {
+  .content {
+    gap: 24px;
+    justify-content: center;
+    .group-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      justify-content: center;
+    }
   }
-  &:not(.no-group) {
-    margin-top: 24px;
-  }
-}
-.group-list {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  justify-content: center;
 }

@@ -1,16 +1,18 @@
-import { PropsWithChildren } from "react";
+import { cn } from "../../utils";
 import "./styles.scss";
-interface ContentProps extends PropsWithChildren {
+interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
   height?: number;
 }
 
 export const Content: React.FC<ContentProps> = ({
   height,
-  children
+  ...divProps
 }) => {
   return (
-    <div className="content" style={{ height: height ? `${height}px` : '100%' }}>
-      {children}
-    </div >
+    <div
+      {...divProps}
+      className={cn("content", divProps.className)}
+      style={{ height: height ? `${height}px` : '100%' }}
+    />
   )
 }

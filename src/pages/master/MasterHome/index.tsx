@@ -5,24 +5,13 @@ import AddIcon from '@mui/icons-material/Add';
 import { Page } from "../../../shared/components/Page";
 import { useGroups } from "../../../providers/groups/hooks";
 import { InfoText } from "../../../shared/components/InfoText";
-import { Group } from "./Group";
 import { Content } from "../../../shared/components/Content";
 import { useRouter } from "../../../providers/router/hooks";
+import { Group } from "../../../shared/components/Group";
 
 export const MasterHome: React.FC = () => {
   const { groups } = useGroups();
   const { navigate } = useRouter();
-
-  // const createGroupButtonRender = (
-  //   <div className={cn("button-container", { "no-group": !groups.asOwner?.length })}>
-  //     {!groups.asOwner?.length && (
-  //       <InfoText className="no-groups-text">
-  //         Vous n'avez pas encore créé de groupe. Appuyez sur le bouton ci-dessous pour en créer un.
-  //       </InfoText>
-  //     )}
-  //     <CreateGroupButton />
-  //   </div>
-  // )
 
   return (
     <Page
@@ -39,7 +28,7 @@ export const MasterHome: React.FC = () => {
           {groups.asOwner?.map((group) => <Group key={group.id} group={group} />)}
         </div>
         {!groups.asOwner?.length && (
-          <InfoText className="no-groups-text">
+          <InfoText>
             Vous n'avez pas encore créé de groupe. Appuyez sur le bouton ci-dessous pour en créer un.
           </InfoText>
         )}

@@ -11,11 +11,11 @@ export const OTPInput: React.FC<MuiOtpInputProps> = (props) => {
 
   return (
     <MuiOtpInput
-      {...props}
       onChange={onChange}
       autoFocus
       value={value}
       length={4}
+      {...props}
     />
   )
 };

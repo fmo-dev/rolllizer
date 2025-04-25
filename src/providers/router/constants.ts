@@ -3,6 +3,7 @@ import { Profile } from "../../pages/common/Profile";
 import { SelectRole } from "../../pages/common/SelectRole";
 import { GroupSettings } from "../../pages/master/GroupSettings";
 import { MasterHome } from "../../pages/master/MasterHome";
+import { JoinGroup } from "../../pages/player/JoinGroup";
 import { PlayerHome } from "../../pages/player/PlayerHome";
 
 export const ROUTES = {
@@ -29,6 +30,10 @@ export const ROUTES = {
   playerHome: {
     path: 'player',
     Component: PlayerHome
+  },
+  joinGroup: {
+    path: 'player/join-group',
+    Component: JoinGroup
   },
   profile: {
     path: 'profile',

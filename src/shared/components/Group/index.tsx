@@ -1,9 +1,9 @@
 import { Paper } from "@mui/material";
-import { GroupType } from "../../../../providers/groups/types";
-import { useRouter } from "../../../../providers/router/hooks";
-import { AppButton } from "../../../../shared/components/Button";
-import { AppImage } from "../../../../shared/components/Image";
 import './styles.scss'
+import { useRouter } from "../../../providers/router/hooks";
+import { GroupType } from "../../../providers/groups/types";
+import { AppImage } from "../Image";
+import { AppButton } from "../Button";
 
 interface GroupProps {
   group: GroupType;

@@ -1,0 +1,35 @@
+#join-group-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  & .content {
+    justify-content: center;
+    .join-group-paper {
+      padding: 24px 20px 38px;
+      display: flex;
+      flex-direction: column;
+      & .code-input {
+        margin-top: 16px;
+        position: relative;
+        display: flex;
+        border: 1px solid var(--color-accent-4);
+        padding: 8px 24px;
+        gap: 12px;
+        font-size: 32px;
+        text-transform: uppercase;
+        font-family: monospace;
+        width: fit-content;
+        align-self: center;
+      }
+      input {
+        background-color: red;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+    }
+  }
+}
