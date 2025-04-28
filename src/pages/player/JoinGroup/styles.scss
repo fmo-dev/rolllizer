@@ -11,6 +11,7 @@
       & .code-input {
         margin-top: 16px;
         position: relative;
+        border-radius: 8px;
         display: flex;
         border: 1px solid var(--color-accent-4);
         padding: 8px 24px;
@@ -20,6 +21,9 @@
         font-family: monospace;
         width: fit-content;
         align-self: center;
+        &.focused {
+          border: 1px solid var(--color-primary);
+        }
       }
       input {
         background-color: red;

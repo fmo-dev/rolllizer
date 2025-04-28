@@ -1,6 +1,7 @@
-export const cn = (...classes: (string | undefined | Record<string, unknown>)[]) => {
+export const cn = (...classes: (string | undefined | Record<string, unknown> | false)[]) => {
   const allClasses: string[] = [];
   classes.forEach((classElement) => {
+    if (!classElement) return;
     if (typeof classElement === 'string') {
       allClasses.push(classElement);
     } else if (typeof classElement === 'object') {
