@@ -5,6 +5,7 @@
   position: relative;
   overflow: hidden;
   height: calc(100% - var(--footer-size));
+  overflow: visible;
   .back-button-container {
     height: 32px;
     .back-button {

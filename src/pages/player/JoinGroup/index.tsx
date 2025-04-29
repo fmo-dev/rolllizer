@@ -8,31 +8,36 @@ import "./styles.scss"
 import { Paper } from "@mui/material";
 import { useAPI } from "../../../providers/api/hooks";
 import { useToastContext } from "../../../providers/toast/hooks";
-import { Player } from "../../master/GroupSettings/PlayerInputs/types";
 import { InvitationCodeInput } from "./InvitationCodeInput";
-import { GroupType } from "../../../providers/groups/types";
+import { GroupToJoin } from "./types";
+import { SelectPlayer } from "./SelectPlayer";
+import { useRouter } from "../../../providers/router/hooks";
+import { useAuthentication } from "../../../providers/authentication/hooks";
+import { useGroups } from "../../../providers/groups/hooks";
+
 export const JoinGroup: React.FC = () => {
   const api = useAPI();
   const [code, setCode] = React.useState('');
   const { addToast } = useToastContext();
+  const { refetchGroups } = useGroups();
+  const { user } = useAuthentication()
+  const { goHome } = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [group, setGroup] = useState<Partial<GroupType>>();
-  const [players, setPlayers] = useState<Partial<Player>[]>();
-  const [isFocused, setIsFocused] = useState(false);
+  const [groupToJoin, setGroupToJoin] = useState<GroupToJoin | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
 
-  const onClick = async () => {
+  const onValidateCode = async (code: string) => {
     setIsLoading(true);
     try {
       const { data: group } = await api.from('group').select('id, name').eq('invitation_code', code).single();
       if (!group?.id) {
         return addToast("Ce code d'invitation ne correspond à aucun groupe");
       }
-      const { data: players } = await api.from('player').select('id, name, user_id').eq('group_id', group?.id);
+      const { data: players } = await api.from('player').select('id, player_name, user_id').eq('group_id', group?.id);
       if (!players?.length) {
         throw new Error("Aucun joueur trouvé pour ce groupe");
       } else {
-        setGroup(group);
-        setPlayers(players);
+        setGroupToJoin({ group, players });
       }
     } catch (error) {
       addToast("Une erreur est survenue lors de la récupération du groupe");
@@ -43,6 +48,31 @@ export const JoinGroup: React.FC = () => {
     }
   }
 
+  const onSelectPlayer = async (playerId: number) => {
+    setIsLoading(true);
+    try {
+      const ttt = await api.from('player').upsert({ id: playerId, user_id: user?.id });
+      console.log(ttt)
+      await refetchGroups();
+      addToast(`Vous avez rejoint ${groupToJoin?.group.name} !`);
+      goHome(user!.profile);
+    } catch (error) {
+      addToast("Une erreur est survenue");
+      console.error("Erreur lors de l'ajout du joueur au groupe : ", error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+
+  const onClick = async () => {
+    if (!groupToJoin) {
+      return onValidateCode(code);
+    } else if (selectedPlayer !== null) {
+      onSelectPlayer(selectedPlayer);
+    }
+  }
+
   return (
     <Page
       id="join-group-page"
@@ -50,15 +80,18 @@ export const JoinGroup: React.FC = () => {
       footerAction={{
         icon: <Check />,
         onClick,
-        disabled: code.length !== 6,
+        disabled: groupToJoin ? !selectedPlayer : code.length !== 6,
         loading: isLoading,
       }}
     >
       <Content>
         <Paper className="join-group-paper">
-          <InvitationCodeInput value={code} onChange={setCode} />
+          {!groupToJoin && <InvitationCodeInput value={code} onChange={setCode} />}
+          {groupToJoin && <SelectPlayer groupToJoin={groupToJoin} onChange={setSelectedPlayer} />}
         </Paper>
       </Content>
     </Page>
   );
 }
+
+// http://localhost:3000/group/join/DF3252

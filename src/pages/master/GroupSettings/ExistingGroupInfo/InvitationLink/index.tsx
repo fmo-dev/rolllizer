@@ -75,5 +75,3 @@ export const InvitationLink: React.FC<InvitationLinkProps> = ({ group }) => {
     </div>
   );
 }
-
-// http://localhost:3000/group/join/DF3252

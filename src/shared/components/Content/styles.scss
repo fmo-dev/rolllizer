@@ -1,12 +1,13 @@
 .content {
   bottom: 0;
-  margin-top: -24px;
+  margin-top: -42px;
   left: 0;
   right: 0;
   padding: 0px 12px;
   display: flex;
   flex-direction: column;
   padding-bottom: calc(var(--footer-size) + 12px);
+  align-items: center;
   & h1 {
     color: var(--color-primary);
     align-self: center;
