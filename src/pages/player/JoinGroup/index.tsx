@@ -51,8 +51,10 @@ export const JoinGroup: React.FC = () => {
   const onSelectPlayer = async (playerId: number) => {
     setIsLoading(true);
     try {
-      const ttt = await api.from('player').upsert({ id: playerId, user_id: user?.id });
-      console.log(ttt)
+      const { error } = await api.from('player').upsert({ id: playerId, user_id: user?.id });
+      if (error) {
+        throw new Error('Une erreur est survenue')
+      }
       await refetchGroups();
       addToast(`Vous avez rejoint ${groupToJoin?.group.name} !`);
       goHome(user!.profile);
