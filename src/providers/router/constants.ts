@@ -35,6 +35,10 @@ export const ROUTES = {
     path: 'player/join-group',
     Component: JoinGroup
   },
+  joinSpecificGroup: {
+    path: 'player/join-group/:1',
+    Component: JoinGroup
+  },
   profile: {
     path: 'profile',
     Component: Profile

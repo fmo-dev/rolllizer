@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import "./styles.scss";
 import Check from '@mui/icons-material/Check';
@@ -14,19 +14,21 @@ import { SelectPlayer } from "./SelectPlayer";
 import { useRouter } from "../../../providers/router/hooks";
 import { useAuthentication } from "../../../providers/authentication/hooks";
 import { useGroups } from "../../../providers/groups/hooks";
+import { useRouteParams } from "../../../providers/route-params/hooks";
 
 export const JoinGroup: React.FC = () => {
   const api = useAPI();
-  const [code, setCode] = React.useState('');
+  const [groupCode] = useRouteParams();
+  const [code, setCode] = React.useState(groupCode || '');
   const { addToast } = useToastContext();
   const { refetchGroups } = useGroups();
   const { user } = useAuthentication()
   const { goHome } = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(!!groupCode);
   const [groupToJoin, setGroupToJoin] = useState<GroupToJoin | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
 
-  const onValidateCode = async (code: string) => {
+  const onValidateCode = useCallback(async (code: string) => {
     setIsLoading(true);
     try {
       const { data: group } = await api.from('group').select('id, name').eq('invitation_code', code).single();
@@ -46,7 +48,13 @@ export const JoinGroup: React.FC = () => {
     finally {
       setIsLoading(false);
     }
-  }
+  }, [api, addToast]);
+
+  useEffect(() => {
+    if (groupCode) {
+      onValidateCode(groupCode);
+    }
+  }, [groupCode, onValidateCode]);
 
   const onSelectPlayer = async (playerId: number) => {
     setIsLoading(true);
@@ -74,7 +82,6 @@ export const JoinGroup: React.FC = () => {
       onSelectPlayer(selectedPlayer);
     }
   }
-
   return (
     <Page
       id="join-group-page"
@@ -88,7 +95,7 @@ export const JoinGroup: React.FC = () => {
     >
       <Content>
         <Paper className="join-group-paper">
-          {!groupToJoin && <InvitationCodeInput value={code} onChange={setCode} />}
+          {!groupToJoin && <InvitationCodeInput value={code} onChange={setCode} disabled={isLoading} />}
           {groupToJoin && <SelectPlayer groupToJoin={groupToJoin} onChange={setSelectedPlayer} />}
         </Paper>
       </Content>
@@ -96,4 +103,4 @@ export const JoinGroup: React.FC = () => {
   );
 }
 
-// http://localhost:3000/group/join/DF3252
+// http://localhost:3000/player/join-group/DF3252

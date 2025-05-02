@@ -8,11 +8,13 @@ import { cn } from "../../../../shared/utils";
 interface InvitationCodeInputProps {
   value: string;
   onChange(code: string): void;
+  disabled?: boolean;
 }
 
 export const InvitationCodeInput: React.FC<InvitationCodeInputProps> = ({
   value,
-  onChange
+  onChange,
+  disabled
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -27,6 +29,7 @@ export const InvitationCodeInput: React.FC<InvitationCodeInputProps> = ({
         ))}
         <input
           autoFocus
+          disabled={disabled}
           onChange={({ target }) => onChange(target.value.replace(/_/g, ''))}
           value={value}
           onFocus={() => setIsFocused(true)}

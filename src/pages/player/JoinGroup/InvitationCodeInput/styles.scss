@@ -15,6 +15,9 @@
     &.focused {
       border: 1px solid var(--color-primary);
     }
+    &:has(input:disabled) {
+      opacity: 0.6;
+    }
   }
   input {
     background-color: red;
