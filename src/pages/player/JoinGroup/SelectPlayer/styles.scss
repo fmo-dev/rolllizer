@@ -5,6 +5,9 @@
   & h1 {
     text-align: center;
   }
+  & img {
+    margin-bottom: 8px;
+  }
   & .players-list {
     display: flex;
     flex-direction: column;
@@ -46,7 +49,7 @@
     }
     &.disabled {
       color: var(--color-accent-4);
-      // pointer-events: none;
+      pointer-events: none;
       border-color: var(--color-accent-4);
     }
   }

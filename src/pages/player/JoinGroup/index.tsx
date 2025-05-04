@@ -21,7 +21,7 @@ export const JoinGroup: React.FC = () => {
   const [groupCode] = useRouteParams();
   const [code, setCode] = React.useState(groupCode || '');
   const { addToast } = useToastContext();
-  const { refetchGroups } = useGroups();
+  const { refetchGroups, groups } = useGroups();
   const { user } = useAuthentication()
   const { goHome } = useRouter();
   const [isLoading, setIsLoading] = useState(!!groupCode);
@@ -31,9 +31,13 @@ export const JoinGroup: React.FC = () => {
   const onValidateCode = useCallback(async (code: string) => {
     setIsLoading(true);
     try {
-      const { data: group } = await api.from('group').select('id, name').eq('invitation_code', code).single();
+      const { data: group } = await api.from('group').select('id, name, image_url').eq('invitation_code', code).single();
       if (!group?.id) {
         return addToast("Ce code d'invitation ne correspond à aucun groupe");
+      }
+      const existingPlayerGroupIds = groups.asPlayer.map(g => g.id);
+      if (existingPlayerGroupIds.includes(group.id)) {
+        return addToast("Vous faites déjà partie de ce groupe !");
       }
       const { data: players } = await api.from('player').select('id, player_name, user_id').eq('group_id', group?.id);
       if (!players?.length) {
@@ -59,7 +63,7 @@ export const JoinGroup: React.FC = () => {
   const onSelectPlayer = async (playerId: number) => {
     setIsLoading(true);
     try {
-      const { error } = await api.from('player').upsert({ id: playerId, user_id: user?.id });
+      const { error } = await api.from('player').update({ user_id: user?.id }).eq('id', playerId);
       if (error) {
         throw new Error('Une erreur est survenue')
       }

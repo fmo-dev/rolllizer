@@ -4,6 +4,7 @@ import { GroupToJoin } from "../types";
 import "./styles.scss";
 import { cn } from "../../../../shared/utils";
 import { useState } from "react";
+import { AppImage } from "../../../../shared/components/Image";
 
 interface SelectPlayerProps {
   groupToJoin: GroupToJoin;
@@ -25,6 +26,7 @@ export const SelectPlayer: React.FC<SelectPlayerProps> = ({
   return (
     <div className="select-player">
       <h1>Rejoindre <br />{groupToJoin.group.name}</h1>
+      {groupToJoin.group.image_url && (<AppImage path={groupToJoin.group.image_url} alt={groupToJoin.group.name} />)}
       <InputLabel>Qui êtes-vous ?</InputLabel>
       <div className="players-list">
         {groupToJoin.players.map(({ id, player_name, user_id }) => (
