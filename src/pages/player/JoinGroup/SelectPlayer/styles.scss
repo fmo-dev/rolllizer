@@ -46,7 +46,7 @@
     }
     &.disabled {
       color: var(--color-accent-4);
-      // pointer-events: none;
+      pointer-events: none;
       border-color: var(--color-accent-4);
     }
   }
