@@ -8,6 +8,7 @@ import { PostgrestSingleResponse } from "@supabase/supabase-js";
 export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const api = useAPI();
   const { user } = useUser();
+  const [areGroupInitialized, setAreGroupInitialized] = useState(false);
   const [groups, setGroups] = useState<UserGroups>({
     asOwner: [],
     asPlayer: []
@@ -42,6 +43,7 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
       if (error) {
         throw new Error(error.message)
       }
+      setAreGroupInitialized(true);
       setGroups({
         asOwner: res[0].data as GroupType[],
         asPlayer: res[1].data as GroupType[]
@@ -54,7 +56,7 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
 
 
   return (
-    <GroupContext.Provider value={{ groups, refetchGroups: fetchGroups }}>
+    <GroupContext.Provider value={{ groups, refetchGroups: fetchGroups, areGroupInitialized }}>
       {children}
     </GroupContext.Provider>
   );

@@ -1,4 +1,7 @@
 #group-settings-page {
+  & .MuiPaper-root {
+    width: calc(100% - 24px);
+  }
   & .form {
     width: 100%;
     display: flex;

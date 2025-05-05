@@ -36,6 +36,7 @@ export const JoinGroup: React.FC = () => {
         return addToast("Ce code d'invitation ne correspond à aucun groupe");
       }
       const existingPlayerGroupIds = groups.asPlayer.map(g => g.id);
+      console.log(groups)
       if (existingPlayerGroupIds.includes(group.id)) {
         return addToast("Vous faites déjà partie de ce groupe !");
       }

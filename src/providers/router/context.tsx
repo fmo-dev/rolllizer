@@ -6,6 +6,7 @@ interface RouterContextState {
   navigate: NavigateFn;
   goBack(): Promise<void> | void;
   goHome(profile: UserProfile | null): ReturnType<NavigateFn>;
+  setHomePath(path: UserProfile | null): void;
 }
 
 export const RouterContext = createContext({} as RouterContextState);

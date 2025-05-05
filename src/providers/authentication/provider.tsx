@@ -10,7 +10,7 @@ import { useRouter } from "../router/hooks";
 
 export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   const { pathname } = useLocation();
-  const { navigate, goHome } = useRouter();
+  const { navigate, goHome, setHomePath } = useRouter();
   const api = useAPI();
   const [user, setUser] = useState<User | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
@@ -18,7 +18,8 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   const onLogin = useCallback(async () => {
     const authenticatedUser = await api.from('user').select('*').single<User>();
     setUser(authenticatedUser.data);
-    const profile = authenticatedUser.data?.profile
+    const profile = authenticatedUser.data?.profile;
+    setHomePath(profile || null);
     if (!profile) {
       navigate('selectRole');
     }
@@ -26,7 +27,7 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
       goHome(profile);
     }
     setIsAuthLoading(false);
-  }, [api, navigate, pathname, goHome]);
+  }, [api, navigate, pathname, goHome, setHomePath]);
 
   const checkSession = useCallback(async () => {
     const { data } = await api.auth.getSession();

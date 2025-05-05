@@ -5,9 +5,13 @@ import { useAuthentication } from "../../providers/authentication/hooks";
 import { Loader } from "../../shared/components/Loader";
 import { HeaderContextProvider } from "../../providers/header/provider";
 import { FooterContextProvider } from "../../providers/footer/provider";
+import { useGroups } from "../../providers/groups/hooks";
 
 export const MainLayout: React.FC<PropsWithChildren> = () => {
   const { isAuthLoading } = useAuthentication();
+  const { areGroupInitialized } = useGroups();
+
+  const isLoading = isAuthLoading || !areGroupInitialized;
 
   return (
     <div className="main-layout">
@@ -15,8 +19,8 @@ export const MainLayout: React.FC<PropsWithChildren> = () => {
         <FooterContextProvider>
           <div className="main-layout-body">
             <div className="main-layout-body-content">
-              {isAuthLoading && <Loader />}
-              {!isAuthLoading && <Outlet />}
+              {isLoading && <Loader />}
+              {!isLoading && <Outlet />}
             </div>
           </div>
         </FooterContextProvider>

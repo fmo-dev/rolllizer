@@ -13,10 +13,11 @@ import { useRouter } from '../../../providers/router/hooks';
 export const SelectRole: React.FC = () => {
   const { updateUser } = useUser();
   const [isLoading, setIsLoading] = useState<UserProfile>();
-  const { goHome } = useRouter();
+  const { goHome, setHomePath } = useRouter();
 
   const onRoleSelect = async (profile: UserProfile) => {
     setIsLoading(profile);
+    setHomePath(profile);
     try {
       await updateUser({ profile });
       goHome(profile);
