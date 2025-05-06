@@ -6,12 +6,14 @@ import { ROUTES } from "../router/constants";
 import { User } from "./types";
 import { UserProvider } from "../user/provider";
 import { useRouter } from "../router/hooks";
+import { useToastContext } from "../toast/hooks";
 
 
 export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   const { pathname } = useLocation();
   const { navigate, goHome, setHomePath } = useRouter();
   const api = useAPI();
+  const { addToast } = useToastContext();
   const [user, setUser] = useState<User | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
 
@@ -42,17 +44,23 @@ export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
     }
     await api.auth.refreshSession();
     onLogin();
+
   }, [api, onLogin, navigate])
 
   const auth = useCallback(async (phone: string) => {
-    const res = await api.auth.signInWithOtp({
-      phone: phone
-    });
-    if (res.error) {
-      throw new Error('Invalid phone number');
+    try {
+      const res = await api.auth.signInWithOtp({
+        phone: phone
+      });
+      if (res.error) {
+        throw new Error('Invalid phone number');
+      }
+    } catch (_error) {
+      addToast('Une erreur est survenue, vérifier votre numéro de téléphone et réessayez.');
+      throw _error;
     }
     return;
-  }, [api]);
+  }, [api, addToast]);
 
   const sendOTP = useCallback(async (phone: string, otp: string) => {
     const { data } = await api.auth.verifyOtp({

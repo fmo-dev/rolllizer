@@ -25,7 +25,7 @@ export const MasterHome: React.FC = () => {
     >
       <Content>
         <div className="group-list">
-          {groups.asOwner?.map((group) => <Group key={group.id} group={group} />)}
+          {groups.asOwner?.map((group) => <Group key={group.id} group={group} asOwner />)}
         </div>
         {!groups.asOwner?.length && (
           <InfoText>

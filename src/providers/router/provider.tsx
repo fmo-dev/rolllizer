@@ -9,7 +9,7 @@ export const RouterContextProvider: React.FC<PropsWithChildren> = ({ children })
   const _navigate = useNavigate();
   const historyRef = useRef<string[]>([]);
   const homePathRef = useRef<keyof typeof ROUTES>("selectRole");
-  console.log(historyRef.current)
+
   const navigate: NavigateFn = useCallback((pathName, ...params) => {
     let path: string = ROUTES[pathName].path;
     params?.forEach((param) => path = path.replace(/:[0-9]/, `${param}`));

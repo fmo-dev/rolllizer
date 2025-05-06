@@ -25,9 +25,9 @@ export const PlayerHome: React.FC = () => {
     >
       <Content>
         <div className="group-list">
-          {groups.asOwner?.map((group) => <Group key={group.id} group={group} />)}
+          {groups.asPlayer?.map((group) => <Group key={group.id} group={group} />)}
         </div>
-        {!groups.asOwner?.length && (
+        {!groups.asPlayer?.length && (
           <InfoText>
             Vous n'avez pas encore rejoint de groupe. Appuyez sur le bouton ci-dessous pour en rejoindre un.
           </InfoText>

@@ -8,10 +8,10 @@ import { FooterContextProvider } from "../../providers/footer/provider";
 import { useGroups } from "../../providers/groups/hooks";
 
 export const MainLayout: React.FC<PropsWithChildren> = () => {
-  const { isAuthLoading } = useAuthentication();
+  const { isAuthLoading, user } = useAuthentication();
   const { areGroupInitialized } = useGroups();
 
-  const isLoading = isAuthLoading || !areGroupInitialized;
+  const isLoading = isAuthLoading || (!!user && !areGroupInitialized);
 
   return (
     <div className="main-layout">
