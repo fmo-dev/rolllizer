@@ -1,6 +1,6 @@
 import { GroupType } from "../../../../providers/groups/types";
 import { AppButton } from "../../../../shared/components/Button";
-import { InvitationLink } from "./InvitationLink";
+import { GameDates } from "./GameDates";
 
 interface ExistingGroupInfoProps {
   group: GroupType;
@@ -9,9 +9,11 @@ interface ExistingGroupInfoProps {
 export const ExistingGroupInfo: React.FC<ExistingGroupInfoProps> = ({
   group
 }) => {
+
+
   return (
     <>
-      <InvitationLink group={group} />
+      <GameDates group={group} />
       <AppButton variant="contained" color="error" onClick={() => { }}>
         Supprimer le groupe
       </AppButton>

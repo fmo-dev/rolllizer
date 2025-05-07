@@ -1,11 +1,11 @@
-import { GroupType } from "../../../../../providers/groups/types";
+import { GroupType } from "../../../../providers/groups/types";
 import "./styles.scss";
 import { useState } from "react";
-import { AppButton } from "../../../../../shared/components/Button";
-import { useAPI } from "../../../../../providers/api/hooks";
+import { useAPI } from "../../../../providers/api/hooks";
 import { generateCode } from "./utils";
-import { useToastContext } from "../../../../../providers/toast/hooks";
+import { useToastContext } from "../../../../providers/toast/hooks";
 import { InputLabel } from "@mui/material";
+import { AppButton } from "../../../../shared/components/Button";
 
 interface InvitationLinkProps {
   group: GroupType;

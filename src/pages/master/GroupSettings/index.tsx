@@ -18,6 +18,7 @@ import { Content } from "../../../shared/components/Content";
 import { GroupName } from "./GroupName";
 import { ExistingGroupInfo } from "./ExistingGroupInfo";
 import { useToastContext } from "../../../providers/toast/hooks";
+import { InvitationLink } from "./InvitationLink";
 
 export const GroupSettings: React.FC = () => {
   const api = useAPI();
@@ -146,6 +147,7 @@ export const GroupSettings: React.FC = () => {
                 <InputLabel>Image du groupe</InputLabel>
                 <ImageInput value={image} onChange={setImage} />
               </div>
+              {group && <InvitationLink group={group} />}
               <PlayerInputs value={players} onChange={setPlayers} />
               {group && <ExistingGroupInfo group={group} />}
             </div>

@@ -15,7 +15,7 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
   });
 
   const getGroupQuery = useCallback(() => (
-    api.from('group').select('*, player(*)').order('created_at', {
+    api.from('group').select('*, player(*), game_date(*)').order('created_at', {
       referencedTable: 'player'
     })
   ), [api]);
@@ -39,6 +39,7 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
         getGroupQuery().eq('owner_id', user.id),
         getGroupAsPlayer()
       ])
+      console.log(res)
       const error = res.find(r => r.error)?.error
       if (error) {
         throw new Error(error.message)
