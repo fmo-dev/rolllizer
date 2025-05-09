@@ -20,7 +20,29 @@ export const ForceAddDate: React.FC<ForceAddDateProps> = ({ onChange }) => {
       <AppButton variant="contained" onClick={() => setIsDatePickerOpen(true)} >
         Ajouter une date
       </AppButton>
-      {isDatePickerOpen && <DatePicker onChange={handleDateChange} />}
+      {isDatePickerOpen && (
+        <DatePicker
+          onChange={handleDateChange}
+          dateInfo={[
+            {
+              dates: [new Date('2025-05-12')],
+              tooltip: "Tous les joueurs sont disponibles",
+              color: "var(--color-success)",
+            },
+            {
+              dates: [new Date('2025-05-15'), new Date('2025-05-18')],
+              tooltip: "Pauline n'est pas disponible",
+              color: "var(--color-warning)",
+            },
+            {
+              dates: [new Date('2025-05-16')],
+              tooltip: "Partie Toto à la plage",
+              color: "var(--color-surface)",
+            },
+          ]}
+
+        />
+      )}
     </div>
   );
 }

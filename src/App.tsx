@@ -12,12 +12,17 @@ import { Router } from './providers/router';
 import { ToastContextProvider } from './providers/toast/provider';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
+import { frFR } from '@mui/x-date-pickers/locales';
+import 'dayjs/locale/fr';
 function App() {
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <LocalizationProvider
+        adapterLocale="fr"
+        localeText={frFR.components.MuiLocalizationProvider.defaultProps.localeText}
+        dateAdapter={AdapterDayjs}
+      >
         <ToastContextProvider>
           <BrowserRouter>
             <RouterContextProvider>
@@ -31,8 +36,8 @@ function App() {
             </RouterContextProvider>
           </BrowserRouter>
         </ToastContextProvider>
-      </ThemeProvider >
-    </LocalizationProvider>
+      </LocalizationProvider>
+    </ThemeProvider >
   )
 }
 
