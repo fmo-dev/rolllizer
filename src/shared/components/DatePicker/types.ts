@@ -1,5 +1,12 @@
 export type DateInfo = {
   dates: Date[];
   tooltip: string;
-  color: string;
+  color: "green" | "yellow" | "blue";
 }
+
+export type DateInfoSettings = {
+  [key: number]: {
+    tooltip: string;
+    color: DateInfo["color"];
+  };
+};

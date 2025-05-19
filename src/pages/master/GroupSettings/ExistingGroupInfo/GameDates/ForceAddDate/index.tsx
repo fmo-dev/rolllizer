@@ -27,17 +27,17 @@ export const ForceAddDate: React.FC<ForceAddDateProps> = ({ onChange }) => {
             {
               dates: [new Date('2025-05-12')],
               tooltip: "Tous les joueurs sont disponibles",
-              color: "var(--color-success)",
+              color: "green",
             },
             {
               dates: [new Date('2025-05-15'), new Date('2025-05-18')],
               tooltip: "Pauline n'est pas disponible",
-              color: "var(--color-warning)",
+              color: "yellow",
             },
             {
               dates: [new Date('2025-05-16')],
               tooltip: "Partie Toto à la plage",
-              color: "var(--color-surface)",
+              color: "blue",
             },
           ]}
 

@@ -1,22 +1,38 @@
 import { SxProps } from "@mui/material";
-import { DateInfo } from "./types";
-import { Theme } from "@emotion/react";
+import { DateInfo, DateInfoSettings } from "./types";
+import { CSSObject, Theme } from "@emotion/react";
+import { DATE_COLOR } from "./constants";
 
-export const getDateInfoStyle = (dateInfo: DateInfo[]): SxProps<Theme> => {
-  const styles: SxProps<Theme> = {}
+export const getDateInfoStyle = (settings: DateInfoSettings): SxProps<Theme> => {
+  const styles: CSSObject = {};
+  Object.entries(settings).forEach(([timestamp, { color }]) => {
+    styles[`& .MuiPickersDay-root[data-timestamp="${timestamp}"]`] = {
+      backgroundColor: DATE_COLOR[color],
+      fontWeight: 500,
+    };
+  });
+  return styles;
+}
+
+export const getDateTimestamp = (date: Date): number => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+  return new Date(year, month, day).getTime();
+}
+
+export const getDateInfoSettings = (dateInfo: DateInfo[]) => {
+  const settings: DateInfoSettings = {}
+  console.log(dateInfo);
+
   dateInfo.forEach((info) => {
     const { dates, tooltip, color } = info;
     dates.forEach((date) => {
-      const dateTimestamp = new Date(date).getTime();
-      // Date without hours minutes seconds and milliseconds
-      const roundedDateTimestamp = dateTimestamp - (dateTimestamp % 86400000);
-      console.log(date, roundedDateTimestamp)
-      console.log("-", 1747000800000)
-      styles[`& button[data-timestamp=${roundedDateTimestamp}]`] = {
-        backgroundColor: color,
-      }
+      const currentDate = new Date(date);
+      const dateTimestamp = getDateTimestamp(currentDate);
+      console.log(date, dateTimestamp, 1747000800000)
+      settings[dateTimestamp] = { tooltip, color };
     });
-  }
-  );
-  return styles;
+  });
+  return settings;
 }
