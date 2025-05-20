@@ -10,3 +10,10 @@ export type DateInfoSettings = {
     color: DateInfo["color"];
   };
 };
+
+export type DateTooltipInfo = {
+  top: number;
+  left: number;
+  tooltip: string;
+  color: DateInfo["color"];
+};

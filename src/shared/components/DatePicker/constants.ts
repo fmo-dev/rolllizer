@@ -1,5 +1,14 @@
 export const DATE_COLOR = {
-  green: "var(--color-transparent-success)",
-  yellow: "var(--color-transparent-warning)",
-  blue: "var(--color-transparent-surface)",
-}
+  green: {
+    transparent: "var(--color-transparent-success)",
+    selected: "var(--color-success)",
+  },
+  yellow: {
+    transparent: "var(--color-transparent-warning)",
+    selected: "var(--color-warning)",
+  },
+  blue: {
+    transparent: "var(--color-transparent-surface)",
+    selected: "var(--color-surface)",
+  }
+};

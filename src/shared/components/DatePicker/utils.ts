@@ -7,8 +7,11 @@ export const getDateInfoStyle = (settings: DateInfoSettings): SxProps<Theme> => 
   const styles: CSSObject = {};
   Object.entries(settings).forEach(([timestamp, { color }]) => {
     styles[`& .MuiPickersDay-root[data-timestamp="${timestamp}"]`] = {
-      backgroundColor: DATE_COLOR[color],
+      backgroundColor: DATE_COLOR[color].transparent,
       fontWeight: 500,
+      "&.Mui-selected": {
+        backgroundColor: DATE_COLOR[color].selected,
+      }
     };
   });
   return styles;
@@ -23,14 +26,11 @@ export const getDateTimestamp = (date: Date): number => {
 
 export const getDateInfoSettings = (dateInfo: DateInfo[]) => {
   const settings: DateInfoSettings = {}
-  console.log(dateInfo);
-
   dateInfo.forEach((info) => {
     const { dates, tooltip, color } = info;
     dates.forEach((date) => {
       const currentDate = new Date(date);
       const dateTimestamp = getDateTimestamp(currentDate);
-      console.log(date, dateTimestamp, 1747000800000)
       settings[dateTimestamp] = { tooltip, color };
     });
   });

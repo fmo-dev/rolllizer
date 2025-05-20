@@ -39,7 +39,6 @@ export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) 
         getGroupQuery().eq('owner_id', user.id),
         getGroupAsPlayer()
       ])
-      console.log(res)
       const error = res.find(r => r.error)?.error
       if (error) {
         throw new Error(error.message)

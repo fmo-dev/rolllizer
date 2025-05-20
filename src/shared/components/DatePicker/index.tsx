@@ -1,56 +1,65 @@
 import "./styles.scss";
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import { DateInfo } from "./types";
+import { DateInfo, DateTooltipInfo } from "./types";
 import { getDateInfoSettings, getDateInfoStyle } from "./utils";
 import { Paper } from "@mui/material";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { cn } from "../../utils";
 
 interface DatePickerProps {
-  onChange(date: Date): void;
+  onChange(date: Date | undefined): void;
   dateInfo?: DateInfo[];
+  className?: string;
 
 }
 
 export const DatePicker: React.FC<DatePickerProps> = ({
   onChange,
   dateInfo = [],
+  className
 }) => {
   const calendarRef = useRef<HTMLDivElement>(null);
   const dateInfoSettings = useMemo(() => getDateInfoSettings(dateInfo), [dateInfo])
+  const [tooltipInfo, setTooltipInfo] = useState<DateTooltipInfo>();
 
   useEffect(() => {
-    // Show tooltip for date info on hover / click
+    const abortController = new AbortController();
     if (calendarRef.current) {
-      const timestamps = Object.keys(dateInfoSettings);
-      timestamps.forEach((timestamp) => {
+      Object.entries(dateInfoSettings).forEach(([timestamp, dateInfo]) => {
         const dateElement = calendarRef.current?.querySelector(
           `.MuiPickersDay-root[data-timestamp="${timestamp}"]`
-        );
+        ) as HTMLDivElement;
         if (dateElement) {
-          dateElement.addEventListener("mouseover", () => {
-            const tooltip = document.createElement("div");
-            tooltip.className = "tooltip";
-            tooltip.innerText = dateInfoSettings[Number(timestamp)].tooltip;
-            dateElement.appendChild(tooltip);
-          });
-          dateElement.addEventListener("mouseout", () => {
-            const tooltip = dateElement.querySelector(".tooltip");
-            if (tooltip) {
-              dateElement.removeChild(tooltip);
-            }
-          });
+          dateElement.addEventListener("touchstart", () => {
+            setTooltipInfo({
+              top: dateElement.getBoundingClientRect().top,
+              left: dateElement.getBoundingClientRect().left,
+              tooltip: dateInfo.tooltip,
+              color: dateInfo.color
+            });
+          }, { signal: abortController.signal });
+          dateElement.addEventListener("touchend", () => {
+            setTooltipInfo(undefined);
+          }, { signal: abortController.signal });
         }
       });
     }
-  }, [calendarRef])
+    return () => abortController.abort();
+  }, [calendarRef, dateInfoSettings])
 
   return (
-    <div className="date-picker">
-      <Paper>
+    <div className={cn("date-picker", className)}>
+      <Paper className="date-picker-paper">
         <DateCalendar
           ref={calendarRef}
           sx={getDateInfoStyle(dateInfoSettings)}
+          onChange={(value) => onChange(value?.toDate())}
         />
+        {tooltipInfo && (
+          <div className={cn("date-tooltip", tooltipInfo.color)} style={{ top: tooltipInfo.top, left: tooltipInfo.left }}>
+            {tooltipInfo.tooltip}
+          </div>
+        )}
       </Paper>
     </div>
   )

@@ -9,6 +9,7 @@ interface ForceAddDateProps {
 
 export const ForceAddDate: React.FC<ForceAddDateProps> = ({ onChange }) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>();
 
   const handleDateChange = async (date: Date) => {
     onChange(date).finally(() => setIsDatePickerOpen(false));
@@ -22,7 +23,8 @@ export const ForceAddDate: React.FC<ForceAddDateProps> = ({ onChange }) => {
       </AppButton>
       {isDatePickerOpen && (
         <DatePicker
-          onChange={handleDateChange}
+          className="game-dates-picker"
+          onChange={setSelectedDate}
           dateInfo={[
             {
               dates: [new Date('2025-05-12')],
@@ -40,7 +42,6 @@ export const ForceAddDate: React.FC<ForceAddDateProps> = ({ onChange }) => {
               color: "blue",
             },
           ]}
-
         />
       )}
     </div>
