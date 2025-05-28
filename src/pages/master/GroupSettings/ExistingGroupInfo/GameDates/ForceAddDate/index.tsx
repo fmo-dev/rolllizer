@@ -17,13 +17,13 @@ export const ForceAddDate: React.FC<ForceAddDateProps> = ({ onChange }) => {
 
   return (
     <div className="game-dates">
-
       <AppButton variant="contained" onClick={() => setIsDatePickerOpen(true)} >
         Ajouter une date
       </AppButton>
       {isDatePickerOpen && (
         <DatePicker
           className="game-dates-picker"
+          onClose={() => setIsDatePickerOpen(false)}
           onChange={setSelectedDate}
           dateInfo={[
             {

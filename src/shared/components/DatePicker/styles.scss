@@ -6,6 +6,14 @@
   height: 100vh;
   width: 100vw;
   z-index: 9999;
+  .back-button-container {
+    height: 32px;
+    .back-button {
+      padding: 8px 16px;
+      color: var(--color-on-background);
+      margin: 7px 0;
+    }
+  }
   & .MuiPaper-root {
     width: fit-content;
     margin: 8px auto;
@@ -21,7 +29,8 @@
     background-color: var(--color-primary);
   }
   &-paper {
-    position: "relative";
+    position: relative;
+    margin-top: 24px !important;
     & .date-tooltip {
       position: absolute;
       width: 120px;
