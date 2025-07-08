@@ -22,6 +22,15 @@ const Login: React.FC = () => {
     callback().finally(() => setIsLoading(false));
   }
 
+  const onSubmit = () => asyncOperation(async () => {
+    try {
+      await auth(currentPhoneNumberRef.current);
+      setCurrentStep(LoginStep.OTP);
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
   const renderStep = () => {
     switch (currentStep) {
       case LoginStep.PHONE:
@@ -55,18 +64,15 @@ const Login: React.FC = () => {
         disabled: currentStep === LoginStep.OTP,
         loading: isLoading,
         icon: <CheckIcon />,
-        onClick: () => asyncOperation(async () => {
-          try {
-            await auth(currentPhoneNumberRef.current);
-            setCurrentStep(LoginStep.OTP);
-          } catch (e) {
-            console.error(e);
-          }
-        }),
+        onClick: onSubmit,
       }}
     >
       <div className='form-container'>
-        <form className='form'>
+        <form className='form' onSubmit={(e) => {
+
+          console.log(e)
+          e.preventDefault(); onSubmit()
+        }}>
           <div className='login-back-button-container'>
             <div className='login-back-button'>
               {currentStep === LoginStep.OTP && (
