@@ -27,17 +27,17 @@ export const ForceAddDate: React.FC<ForceAddDateProps> = ({ onChange }) => {
           onChange={setSelectedDate}
           dateInfo={[
             {
-              dates: [new Date('2025-05-12')],
+              dates: [new Date('2025-07-12')],
               tooltip: "Tous les joueurs sont disponibles",
               color: "green",
             },
             {
-              dates: [new Date('2025-05-15'), new Date('2025-05-18')],
+              dates: [new Date('2025-07-15'), new Date('2025-07-18')],
               tooltip: "Pauline n'est pas disponible",
               color: "yellow",
             },
             {
-              dates: [new Date('2025-05-16')],
+              dates: [new Date('2025-07-16')],
               tooltip: "Partie Toto à la plage",
               color: "blue",
             },

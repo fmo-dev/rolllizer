@@ -31,42 +31,14 @@
   &-paper {
     position: relative;
     margin-top: 24px !important;
-    & .date-tooltip {
-      position: absolute;
-      width: 120px;
-      font-size: 14px;
-      transform: translate(calc(-50% + 18px), calc(-100% - 10px));
-      color: white;
-      text-align: center;
-      padding: 4px 8px;
-      border-radius: 8px;
-      &:after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        border-width: 6px;
-        border-style: solid;
-      }
-      &.green {
-        background-color: var(--color-success);
-        &:after {
-          border-color: var(--color-success) transparent transparent transparent;
-        }
-      }
-      &.blue {
-        background-color: var(--color-surface);
-        &:after {
-          border-color: var(--color-surface) transparent transparent transparent;
-        }
-      }
-      &.yellow {
-        background-color: var(--color-warning);
-        &:after {
-          border-color: var(--color-warning) transparent transparent transparent;
-        }
-      }
-    }
+    margin-bottom: 16px !important;
+  }
+  & .date-alert-container {
+    width: 80vw !important;
+  }
+  & .date-picker-selected-date {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
   }
 }
