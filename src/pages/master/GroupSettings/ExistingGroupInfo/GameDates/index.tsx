@@ -1,16 +1,14 @@
 import { ForceAddDate } from "./ForceAddDate";
-import { useAPI } from "../../../../../providers/api/hooks";
 import { GroupType } from "../../../../../providers/groups/types";
 import "./styles.scss";
 import { InputLabel } from "@mui/material";
+import { api } from "../../../../../providers/api/constants";
 
 interface GameDatesProps {
   group: GroupType;
 }
 
 export const GameDates: React.FC<GameDatesProps> = ({ group }) => {
-  const api = useAPI();
-
   const onAddDate = async (date: Date) => {
     const res = await api.from('game_date').insert({
       group_id: group.id,

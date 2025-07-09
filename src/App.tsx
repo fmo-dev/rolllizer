@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { AuthenticationProvider } from './providers/authentication/provider';
-import { APIProvider } from './providers/api/provider';
 
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
@@ -26,13 +25,11 @@ function App() {
         <ToastContextProvider>
           <BrowserRouter>
             <RouterContextProvider>
-              <APIProvider>
-                <AuthenticationProvider>
-                  <GroupContextProvider>
-                    <Router />
-                  </GroupContextProvider>
-                </AuthenticationProvider>
-              </APIProvider>
+              <AuthenticationProvider>
+                <GroupContextProvider>
+                  <Router />
+                </GroupContextProvider>
+              </AuthenticationProvider>
             </RouterContextProvider>
           </BrowserRouter>
         </ToastContextProvider>

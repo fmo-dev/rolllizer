@@ -9,7 +9,6 @@ import _map from "lodash/map";
 import CheckIcon from '@mui/icons-material/Check';
 import "./styles.scss";
 import { ImageInput } from "../../../shared/components/Input/ImageInput";
-import { useAPI } from "../../../providers/api/hooks";
 import { useUser } from "../../../providers/user/hooks";
 import { PlayerInputs } from "./PlayerInputs";
 import { NoPlayerDialog } from "./NoPlayerDialog";
@@ -19,9 +18,9 @@ import { GroupName } from "./GroupName";
 import { ExistingGroupInfo } from "./ExistingGroupInfo";
 import { useToastContext } from "../../../providers/toast/hooks";
 import { InvitationLink } from "./InvitationLink";
+import { api } from "../../../providers/api/constants";
 
 export const GroupSettings: React.FC = () => {
-  const api = useAPI();
   const { user } = useUser();
   const { navigate } = useRouter();
   const [groupId] = useRouteParams();

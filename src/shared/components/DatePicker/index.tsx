@@ -1,12 +1,14 @@
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import { DateInfo, DateTooltipInfo } from "./types";
+import { DateInfo } from "./types";
 import { getDateInfoSettings, getDateInfoStyle } from "./utils";
-import { Alert, MenuItem, Paper, Select } from "@mui/material";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Alert, MenuItem, Paper } from "@mui/material";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { cn } from "../../utils";
+import { Select } from "../Input/Select";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "./styles.scss";
-import { PickerValue } from '@mui/x-date-pickers/internals';
+import Picker from 'react-mobile-picker';
+import { TimePicker } from '../TimePicker';
 
 interface DatePickerProps {
   onChange(date: Date | undefined): void;
@@ -25,8 +27,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   const calendarRef = useRef<HTMLDivElement>(null);
   const dateInfoSettings = useMemo(() => getDateInfoSettings(dateInfo), [dateInfo])
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [selectedTime, setSelectedTime] = useState<string>("00:00");
-
   const currentAlert = useMemo(() => {
     if (!selectedDate) return undefined;
     return dateInfoSettings[selectedDate.getTime()];
@@ -46,17 +46,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         return "info";
     }
   }, []);
-  console.log(Array(24).fill(0).flatMap((_, index) => {
-    const hour = index < 10 ? `0${index}` : index;
-    return Array(4).fill(0).map((_, i) => {
-      const hourWithQuarter = `${hour}:${!i ? '00' : i * 15}`;
-      return (
-        <MenuItem key={hourWithQuarter} value={hourWithQuarter}>
-          {hourWithQuarter}
-        </MenuItem>
-      );
-    })
-  }))
+
   return (
     <div className={cn("date-picker", className)}>
       <div className="back-button-container">
@@ -82,23 +72,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           </span>
           <div className="date-picker-time-select">
             à
-            <Select
-              value={selectedTime}
-              onChange={(e) => setSelectedTime(e.target.value)}
-              aria-placeholder="hh:mm"
-            >
-              {Array(24).fill(0).flatMap((_, index) => {
-                const hour = index < 10 ? `0${index}` : index;
-                return Array(4).fill(0).map((_, i) => {
-                  const hourWithQuarter = `${hour}:${!i ? '00' : i * 15}`;
-                  return (
-                    <MenuItem key={hourWithQuarter} value={hourWithQuarter}>
-                      {hourWithQuarter}
-                    </MenuItem>
-                  );
-                })
-              })}
-            </Select>
+            <TimePicker onChange={(time) => console.log(time)} />
           </div>
         </div>
       )}

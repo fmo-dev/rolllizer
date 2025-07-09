@@ -3499,6 +3499,11 @@ react-is@^19.1.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-19.1.0.tgz#805bce321546b7e14c084989c77022351bbdd11b"
   integrity sha512-Oe56aUPnkHyyDxxkvqtd7KkdQP5uIUfHxd5XTb3wE9d/kRnZLmKbDB0GWk919tdQ+mxxPtG6EAs6RMT6i1qtHg==
 
+react-mobile-picker@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-mobile-picker/-/react-mobile-picker-1.1.1.tgz#ac296560b206ef6620c568be149b0ec7247da2e3"
+  integrity sha512-Yv5ND0rtSFnzT+qvuD8wiOfAcEm/abSLNwaUnIS74Hii1x0IIOtRHB7Jis/O9ve3y7YQkaYFyk/wvlKoTv1Aog==
+
 react-refresh@^0.14.2:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.2.tgz#3833da01ce32da470f1f936b9d477da5c7028bf9"

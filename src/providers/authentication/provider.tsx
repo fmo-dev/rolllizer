@@ -1,18 +1,17 @@
 import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { AuthenticationContext } from "./context";
-import { useAPI } from "../api/hooks";
 import { useLocation } from "react-router-dom";
 import { ROUTES } from "../router/constants";
 import { User } from "./types";
 import { UserProvider } from "../user/provider";
 import { useRouter } from "../router/hooks";
 import { useToastContext } from "../toast/hooks";
+import { api } from "../api/constants";
 
 
 export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   const { pathname } = useLocation();
   const { navigate, goHome, setHomePath } = useRouter();
-  const api = useAPI();
   const { addToast } = useToastContext();
   const [user, setUser] = useState<User | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);

@@ -6,7 +6,6 @@ import { Page } from "../../../shared/components/Page";
 import { Content } from "../../../shared/components/Content";
 import "./styles.scss"
 import { Paper } from "@mui/material";
-import { useAPI } from "../../../providers/api/hooks";
 import { useToastContext } from "../../../providers/toast/hooks";
 import { InvitationCodeInput } from "./InvitationCodeInput";
 import { GroupToJoin } from "./types";
@@ -15,9 +14,9 @@ import { useRouter } from "../../../providers/router/hooks";
 import { useAuthentication } from "../../../providers/authentication/hooks";
 import { useGroups } from "../../../providers/groups/hooks";
 import { useRouteParams } from "../../../providers/route-params/hooks";
+import { api } from "../../../providers/api/constants";
 
 export const JoinGroup: React.FC = () => {
-  const api = useAPI();
   const [groupCode] = useRouteParams();
   const [code, setCode] = React.useState(groupCode || '');
   const { addToast } = useToastContext();

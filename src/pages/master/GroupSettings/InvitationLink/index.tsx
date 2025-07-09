@@ -1,11 +1,11 @@
 import { GroupType } from "../../../../providers/groups/types";
 import "./styles.scss";
 import { useState } from "react";
-import { useAPI } from "../../../../providers/api/hooks";
 import { generateCode } from "./utils";
 import { useToastContext } from "../../../../providers/toast/hooks";
 import { InputLabel } from "@mui/material";
 import { AppButton } from "../../../../shared/components/Button";
+import { api } from "../../../../providers/api/constants";
 
 interface InvitationLinkProps {
   group: GroupType;
@@ -16,7 +16,6 @@ export const InvitationLink: React.FC<InvitationLinkProps> = ({ group }) => {
   const [seeCode, setSeeCode] = useState(false);
   const [invitationCode, setInvitationCode] = useState<string | null>(group.invitation_code);
   const { addToast } = useToastContext();
-  const api = useAPI();
 
   const onCreateCode = async () => {
     setIsLoading(true);

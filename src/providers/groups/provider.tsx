@@ -1,12 +1,11 @@
 import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { GroupType, UserGroups } from "./types";
-import { useAPI } from "../api/hooks";
 import { GroupContext } from "./context";
 import { useUser } from "../user/hooks";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import { api } from "../api/constants";
 
 export const GroupContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const api = useAPI();
   const { user } = useUser();
   const [areGroupInitialized, setAreGroupInitialized] = useState(false);
   const [groups, setGroups] = useState<UserGroups>({
