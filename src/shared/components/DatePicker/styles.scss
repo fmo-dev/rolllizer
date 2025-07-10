@@ -1,6 +1,8 @@
 .date-picker {
   position: fixed;
   background-color: white;
+  display: flex;
+  flex-direction: column;
   top: 0;
   left: 0;
   height: 100vh;
@@ -14,13 +16,30 @@
       margin: 7px 0;
     }
   }
+  &-title {
+    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+  }
   & .MuiPaper-root {
     width: fit-content;
-    margin: 8px auto;
+    margin: 6px auto;
+    padding-bottom: 0;
   }
-  & .MuiDateCalendar-root * {
-    color: var(--color-text);
-    font-size: 14px;
+  .MuiDateCalendar-root {
+    height: unset;
+    margin-bottom: 8px;
+    & * {
+      color: var(--color-text);
+      font-size: 14px;
+    }
+    & .MuiPickersCalendarHeader-root {
+      margin-top: 4px;
+    }
+    & .MuiPickersSlideTransition-root {
+      min-height: 230px;
+    }
   }
   & .MuiPickersArrowSwitcher-button svg {
     font-size: 24px;
@@ -30,8 +49,6 @@
   }
   &-paper {
     position: relative;
-    margin-top: 24px !important;
-    margin-bottom: 16px !important;
   }
   & .date-alert-container {
     width: 80vw !important;
@@ -40,5 +57,9 @@
     text-align: center;
     font-weight: bold;
     font-size: 20px;
+    margin-top: 12px;
+    justify-content: center;
+    display: flex;
+    gap: 12px;
   }
 }

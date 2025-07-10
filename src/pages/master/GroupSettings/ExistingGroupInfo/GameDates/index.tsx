@@ -23,7 +23,7 @@ export const GameDates: React.FC<GameDatesProps> = ({ group }) => {
   return (
     <div className="game-dates">
       <InputLabel className="invitation-link-label">Prochaines parties</InputLabel>
-      <ForceAddDate onChange={onAddDate} />
+      <ForceAddDate onChange={onAddDate} group={group} />
     </div>
   );
 }
