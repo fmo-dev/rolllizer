@@ -7,19 +7,43 @@
     border-radius: 4px;
     border: 1px solid var(--color-accent-4);
   }
-  & .time-picker-select {
-    width: 100%;
+  & .time-picker-select-position {
     height: 0vh;
     position: fixed;
+    width: 100vw;
+    z-index: 9999;
     transition: height 0.15s ease-in-out;
     bottom: 0;
     left: 0;
-    z-index: 9999;
-    background-color: white;
-    border-radius: 4px;
-    box-shadow: 0px 0px 4px 2px var(--color-transparent-grey);
+    display: flex;
+    flex-direction: column;
     &.open {
-      height: 50vh;
+      height: 100vh;
+    }
+    & > div {
+      width: 100%;
+    }
+    & .time-picker-select-background {
+      flex: 1;
+    }
+    & .time-picker-select-label {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--color-text);
+    }
+    & button {
+      font-size: 14px;
+    }
+    & .time-picker-select-container {
+      height: fit-content;
+      padding: 16px 0;
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: 0px 0px 4px 2px var(--color-transparent-grey);
+      & .select-component {
+        width: 280px;
+        margin: 0 auto;
+      }
     }
   }
 }

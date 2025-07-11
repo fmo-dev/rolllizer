@@ -1,16 +1,15 @@
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DateInfo } from "./types";
 import { getDateInfoSettings, getDateInfoStyle } from "./utils";
-import { Alert, MenuItem, Paper } from "@mui/material";
+import { Alert, Paper } from "@mui/material";
 import React, { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { cn } from "../../utils";
-import { Select } from "../Input/Select";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "./styles.scss";
-import Picker from 'react-mobile-picker';
 import { TimePicker } from '../TimePicker';
 import { Title } from '../Title';
 import { TimePickerValue } from '../TimePicker/types';
+import { AppButton } from '../Button';
 
 interface DatePickerProps {
   onChange(date: Date | undefined): void;
@@ -52,6 +51,15 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     }
   }, []);
 
+  const onSubmit = () => {
+    if (selectedDate) {
+      const dateWithTime = new Date(selectedDate.setHours(Number(selectedTime.hour), Number(selectedTime.minute)));
+      onChange(dateWithTime);
+    } else {
+      onChange(undefined);
+    }
+  }
+
   return (
     <div className={cn("date-picker", className)}>
       <div className="back-button-container">
@@ -67,22 +75,25 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           onChange={(value) => setSelectedDate(value?.toDate())}
         />
       </Paper>
-      {currentAlert && (
-        <Alert severity={getAlertSeverity(currentAlert.color)} className="date-alert-container" style={{ opacity: currentAlert ? 1 : 0 }}>
-          <div className={cn("date-alert", currentAlert.color)}>
-            {currentAlert.tooltip}
+      <div className="date-picker-value-info">
+        {currentAlert && (
+          <Alert severity={getAlertSeverity(currentAlert.color)} className="date-alert-container" style={{ opacity: currentAlert ? 1 : 0 }}>
+            <div className={cn("date-alert", currentAlert.color)}>
+              {currentAlert.tooltip}
+            </div>
+          </Alert>
+        )}
+        {selectedDate && (
+          <div className="date-picker-selected-date">
+            Le {selectedDate.toLocaleDateString()}
+            <div className="date-picker-time-select">
+              à
+            </div>
+            <TimePicker onChange={setSelectedTime} value={selectedTime} />
           </div>
-        </Alert>
-      )}
-      {selectedDate && (
-        <div className="date-picker-selected-date">
-          Le {selectedDate.toLocaleDateString()}
-          <div className="date-picker-time-select">
-            à
-          </div>
-          <TimePicker onChange={setSelectedTime} value={selectedTime} />
-        </div>
-      )}
+        )}
+      </div>
+      <AppButton className='date-picker-submit-button' onClick={onSubmit}>Valider</AppButton>
     </div>
   )
 }

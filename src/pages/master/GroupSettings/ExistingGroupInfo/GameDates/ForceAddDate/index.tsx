@@ -2,7 +2,6 @@ import "./styles.scss";
 import { AppButton } from "../../../../../../shared/components/Button";
 import { DatePicker } from "../../../../../../shared/components/DatePicker";
 import { useState } from "react";
-import { useGroups } from "../../../../../../providers/groups/hooks";
 import { GroupType } from "../../../../../../providers/groups/types";
 
 interface ForceAddDateProps {
@@ -12,8 +11,6 @@ interface ForceAddDateProps {
 
 export const ForceAddDate: React.FC<ForceAddDateProps> = ({ onChange, group }) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const { } = useGroups();
-  const [selectedDate, setSelectedDate] = useState<Date>();
 
   const handleDateChange = async (date: Date) => {
     onChange(date).finally(() => setIsDatePickerOpen(false));
@@ -29,7 +26,7 @@ export const ForceAddDate: React.FC<ForceAddDateProps> = ({ onChange, group }) =
           className="game-dates-picker"
           label={<>Ajouter une date pour <br /> <b>{group.name}</b></>}
           onClose={() => setIsDatePickerOpen(false)}
-          onChange={setSelectedDate}
+          onChange={handleDateChange}
           dateInfo={[
             {
               dates: [new Date('2025-07-12')],

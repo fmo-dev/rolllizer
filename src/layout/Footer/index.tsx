@@ -42,7 +42,7 @@ export const Footer: React.FC = () => {
   }
 
   if (!user?.profile && !footerAction) {
-    return null;
+    return <div className="footer-placeholder" />;
   }
   return (
     <div className="footer">

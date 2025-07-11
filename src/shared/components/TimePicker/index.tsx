@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { TimePickerValue } from "./types";
-import Picker from "react-mobile-picker";
 import { cn } from "../../utils";
 import { Select } from "../Input/Select";
 import "./styles.scss"
+import { AppButton } from "../Button";
 
 interface TimePickerProps {
   onChange(time: { hour: string; minute: string }): void;
@@ -23,20 +23,24 @@ export const TimePicker: React.FC<TimePickerProps> = ({
       <button onClick={() => setIsTimePickerOpen(!isTimePickerOpen)} className="time-picker-input">
         {selectedTime.hour}:{selectedTime.minute}
       </button>
-      <div className={cn("time-picker-select", { "open": isTimePickerOpen })}>
-        <Select
-          value={selectedTime}
-          height={100}
-          size={1}
-          onChange={(time) => {
-            setSelectedTime(time);
-            onChange(time);
-          }}
-          options={[
-            { name: "hour", options: Array.from({ length: 24 }, (_, i) => ({ label: String(i).padStart(2, '0'), value: String(i).padStart(2, '0') })) },
-            { name: "minute", options: Array.from({ length: 60 / 15 }, (_, i) => ({ label: String(i * 15).padStart(2, '0'), value: String(i * 15).padStart(2, '0') })) },
-          ]}
-        />
+      <div className={cn("time-picker-select-position", { "open": isTimePickerOpen })}>
+        <div className="time-picker-select-background" onClick={() => setIsTimePickerOpen(false)} />
+        <div className="time-picker-select-container">
+          <div className="time-picker-select-label">Sélectionnez l'heure</div>
+          <Select
+            open
+            value={selectedTime}
+            onChange={(time) => {
+              setSelectedTime(time);
+              onChange(time);
+            }}
+            options={[
+              { name: "hour", options: Array.from({ length: 24 }, (_, i) => ({ label: String(i).padStart(2, '0'), value: String(i).padStart(2, '0') })) },
+              { name: "minute", options: Array.from({ length: 60 / 5 }, (_, i) => ({ label: String(i * 5).padStart(2, '0'), value: String(i * 5).padStart(2, '0') })) },
+            ]}
+          />
+          <AppButton onClick={() => setIsTimePickerOpen(false)}>Valider</AppButton>
+        </div>
       </div>
     </div>
   );

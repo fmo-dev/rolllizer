@@ -1,3 +1,7 @@
+.footer-placeholder {
+  height: var(--footer-size);
+  background-color: var(--color-background);
+}
 .footer {
   height: var(--footer-size);
   position: fixed;
